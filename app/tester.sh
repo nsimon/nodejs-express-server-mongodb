@@ -309,27 +309,27 @@ main ()
     printf "tester.sh.\n"
     printf "\n"
 
-    browser_gets
+    #browser_gets
 
     #get_home_page_v1
     #get_home_page_v2
 
     get_all_directors
-    get_one_director_and_their_movies
-    get_all_movies_by_a_director
-    get_one_movie_by_a_director
+    #get_one_director_and_their_movies
+    #get_all_movies_by_a_director
+    #get_one_movie_by_a_director
 
     ##put_create_all_directors
-    put_create_one_director                # Landis
-    put_create_movie_for_director          # animal_house_1978
+    #put_create_one_director                # Landis
+    #put_create_movie_for_director          # animal_house_1978
 
-    post_update_movies_for_a_director
-    post_change_movie_name
-    post_change_director_name_to_Peale
-    post_change_director_name_to_Peele
+    #post_update_movies_for_a_director
+    #post_change_movie_name
+    #post_change_director_name_to_Peale
+    #post_change_director_name_to_Peele
 
-    delete_director_and_their_movies
-    delete_one_movie
+    #delete_director_and_their_movies
+    #delete_one_movie
 
     printf "====\n"
     printf "Done\n"

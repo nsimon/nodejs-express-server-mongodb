@@ -66,8 +66,7 @@ var datetime    = require ("node-datetime");
 var path        = require ("path");
 var util        = require ("util");
 var MongoClient = require ("mongodb").MongoClient;
-
-var helpers    = require ("./handlers/helpers.js");
+var helpers     = require ("./handlers/helpers.js");
 
 /******************************************************************************/
 /* log to logfile (create and append)                                         */
@@ -133,22 +132,27 @@ app.listen (8080);
 /* mongodb                                                                    */
 /******************************************************************************/
 
-// Connection URL
-var databaseName = "movieapp";
-var url = "mongodb://localhost:27017/" + databaseName;
-var db;
-
-MongoClient.connect (url, { useNewUrlParser: true }, (err, database) =>
+var m_db;
+var m_directors;
+var m_movies;
+var db_name = "movieapp";
+var db_url  = "mongodb://localhost:27017/" + db_name;
+ 
+MongoClient.connect (db_url, function (err, database)
     {
+
     if (err)
         {
-        console.log ("ERROR: unable to connect to db");
+        console.log ("ERROR: unable to connect to mongodb database: " + db_name);
         }
     else
         {
-        console.log ("connected successfully to mongodb: " + databaseName);
-        console.log ("");
-        db = database;
+        console.log ("Connected successfully to database: " + db_name);
+
+        // Initialize global db vars
+        m_db = database;
+        m_directors = m_db.collection ("directors");
+        m_movies    = m_db.collection ("movies");
         }
     });
 
@@ -252,9 +256,13 @@ v1.get ([ "/directors.json",
           "/directors.xml" ], (request, response) =>
     {
     // EX:      /directors.json
-    //          /directors.json?directors_from=New_York_City
     // DESC:    get all directors
     // RETURNS: json
+
+    m_directors.find ({ }).toArray (function (err, director)
+        {
+        console.log (JSON.stringify (director, null, 2));
+        });
 
     // each folder is the name of a director
     fs.readdir ("../static/directors", (err, directors) =>
