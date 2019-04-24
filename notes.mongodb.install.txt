@@ -1,0 +1,47 @@
+Date ... 04/22/2019
+Desc ... notes.mongodb.install.txt
+
+
+=================================
+Install mongodb (on Ubuntu 18.04)
+=================================
+
+apt: import the public key
+  . sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 9DA31620334BD75D9DCB49F368818C72E52529D4
+
+apt: create the mongodb "list file"
+  . echo "deb [ arch=amd64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.0.list
+  . validate: cat /etc/apt/sources.list.d/mongodb-org-4.0.list 
+
+apt: reload the updated package database
+  . sudo apt-get update
+
+Install mongodb
+  . sudo apt-get install -y mongodb-org
+
+Update /etc/mongod.conf (ex):
+  . Where to store data:
+      dbPath: /home/nsimon/cwb206/week12/mongodb
+  . Where to log:
+      path: /home/nsimon/cwb206/week12/mongodb/mongod.log
+
+Start mongodb
+  . sudo service mongod start (| stop)
+
+Validate daemon is running:
+  . ps ax | grep mongod
+
+Validate data store (ex):
+  . ls /home/nsimon/cwb206/week12/mongodb
+
+Validate logging (ex):
+  . ls /home/nsimon/cwb206/week12/mongodb/mongod.log
+
+
+====
+Misc
+====
+
+Scripted mongo shell command (ex):
+  . mongo photosharingapp --eval "db.albums.find ()"
+
