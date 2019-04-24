@@ -4,7 +4,7 @@ create.load.db.sh
 db.dropDatabase ()
 ==================
 
-{ "dropped" : "movieapp", "ok" : 1 }
+{ "ok" : 1 }
 
 ================
 db.users.save ()
