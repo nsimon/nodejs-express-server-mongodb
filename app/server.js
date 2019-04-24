@@ -56,15 +56,16 @@
 /******************************************************************************/
 
 // Required libs
-var async      = require ("async");
-var bodyParser = require ("body-parser");
-var express    = require ("express");
-var fs         = require ("fs");
-var formidable = require ("formidable");
-var glob       = require ("glob");
-var datetime   = require ("node-datetime");
-var path       = require ("path");
-var util       = require ("util");
+var async       = require ("async");
+var bodyParser  = require ("body-parser");
+var express     = require ("express");
+var fs          = require ("fs");
+var formidable  = require ("formidable");
+var glob        = require ("glob");
+var datetime    = require ("node-datetime");
+var path        = require ("path");
+var util        = require ("util");
+var MongoClient = require ("mongodb").MongoClient;
 
 var helpers    = require ("./handlers/helpers.js");
 
@@ -95,7 +96,7 @@ console.log ("server.js.  Started: " + dt.format ("Y-m-d H:M:S"));
 console.log ("");
 
 /******************************************************************************/
-/* routing                                                                    */
+/* express routing                                                            */
 /******************************************************************************/
 
 // Create express router
@@ -127,6 +128,29 @@ app.use (express.static (__dirname + "/../static"));
 
 // Listen for inbound requests on port 8080
 app.listen (8080);
+
+/******************************************************************************/
+/* mongodb                                                                    */
+/******************************************************************************/
+
+// Connection URL
+var databaseName = "movieapp";
+var url = "mongodb://localhost:27017/" + databaseName;
+var db;
+
+MongoClient.connect (url, { useNewUrlParser: true }, (err, database) =>
+    {
+    if (err)
+        {
+        console.log ("ERROR: unable to connect to db");
+        }
+    else
+        {
+        console.log ("connected successfully to mongodb: " + databaseName);
+        console.log ("");
+        db = database;
+        }
+    });
 
 /******************************************************************************/
 /* ROUTES: vi.all()                                                           */
