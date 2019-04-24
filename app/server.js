@@ -129,7 +129,7 @@ app.use (express.static (__dirname + "/../static"));
 app.listen (8080);
 
 /******************************************************************************/
-/* mongodb                                                                    */
+/* mongodb startup, initialization                                            */
 /******************************************************************************/
 
 var m_db;
@@ -140,7 +140,6 @@ var db_url  = "mongodb://localhost:27017/" + db_name;
  
 MongoClient.connect (db_url, function (err, database)
     {
-
     if (err)
         {
         console.log ("ERROR: unable to connect to mongodb database: " + db_name);
@@ -149,8 +148,8 @@ MongoClient.connect (db_url, function (err, database)
         {
         console.log ("Connected successfully to database: " + db_name);
 
-        // Initialize global db vars
-        m_db = database;
+        // Initialize global mongo db vars
+        m_db        = database;
         m_directors = m_db.collection ("directors");
         m_movies    = m_db.collection ("movies");
         }
@@ -259,22 +258,17 @@ v1.get ([ "/directors.json",
     // DESC:    get all directors
     // RETURNS: json
 
-    m_directors.find ({ }).toArray (function (err, director)
+    // mongodb: get director names
+    m_directors.find ({ }).toArray (function (err, directors)
         {
-        console.log (JSON.stringify (director, null, 2));
-        });
-
-    // each folder is the name of a director
-    fs.readdir ("../static/directors", (err, directors) =>
-        {
-        var rc1;
+        var rc;
         var jsonOut;
         var director_list = [];
 
         if (err)
             {
             rc = 1;
-            message = "Unable to read directors";
+            message = "Unable to get directors from mongodb";
             }
         else
             {
@@ -284,7 +278,8 @@ v1.get ([ "/directors.json",
             // push a json key:value pair for each director
             for (var i = 0; i < directors.length; i++)
                 {
-                director_list.push ({ "name": directors [i] });
+                console.log ("director: " + directors [i].name);
+                director_list.push ({ "name": directors [i].name });
                 };
             }
 
