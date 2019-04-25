@@ -417,10 +417,7 @@ v1.get ([ "/directors/:director/movies.json",
     var director = request.params.director;
     console.log ("director ....... " + director);
 
-    // each folder is the name of a director
-    // glob ("../static/directors/" + director + "/*.json", (err, movies) =>
-
-    // mongodb: get movies from directror
+    // mongodb: get movies by directror
     m_movies.find ({ directors_id: director }).toArray (function (err, movies)
         {
         var rc;
