@@ -303,7 +303,15 @@ v1.get ([ "/directors/:director.json",
     var director = request.params.director;
     console.log ("director ....... " + director);
 
-    // $mongo movieapp --eval 'db.movies.find( { directors_id: "Scorsese" } )'
+    // $mongo movieapp --eval 'db.movies.find ({ directors_id: "Scorsese" })'
+    //
+    // { "_id" : "Casino_1995",             "name" : "Casino_1995",             "directors_id" : "Scorsese", "description" : "A tale of greed, deception, money, power, and murder occur between two best friends: a mafia enforcer and a casino executive, compete against each other over a gambling empire, and over a fast living and fast loving socialite." }
+    // { "_id" : "Goodfellas_1990",         "name" : "Goodfellas_1990",         "directors_id" : "Scorsese", "description" : "The story of Henry Hill and his life in the mob, covering his relationship with his wife Karen Hill and his mob partners Jimmy Conway and Tommy DeVito in the Italian-American crime syndicate." }
+    // { "_id" : "Kundun_1997",             "name" : "Kundun_1997",             "directors_id" : "Scorsese", "description" : "From childhood to adulthood, Tibets fourteenth Dalai Lama deals with Chinese oppression and other problems." }
+    // { "_id" : "Mean_Streets_1973",       "name" : "Mean_Streets_1973",       "directors_id" : "Scorsese", "description" : "A small-time hood aspires to work his way up the ranks of a local mob." }
+    // { "_id" : "Raging_Bull_1980",        "name" : "Raging_Bull_1980",        "directors_id" : "Scorsese", "description" : "The life of boxer Jake LaMotta, as the violence and temper that leads him to the top in the ring destroys his life outside of it." }
+    // { "_id" : "Taxi_Driver_1976",        "name" : "Taxi_Driver_1976",        "directors_id" : "Scorsese", "description" : "A mentally unstable veteran works as a nighttime taxi driver in New York City, where the perceived decadence and sleaze fuels his urge for violent action by attempting to liberate a presidential campaign worker and an underage prostitute." }
+    // { "_id" : "The_Color_of_Money_1986", "name" : "The_Color_of_Money_1986", "directors_id" : "Scorsese", "description" : "Fast Eddie Felson teaches a cocky but immensely talented protege the ropes of pool hustling, which in turn inspires him to make an unlikely comeback." }
 
     // mongodb: get movies from directror
     m_movies.find ({ directors_id: director }).toArray (function (err, movies)
@@ -313,14 +321,6 @@ v1.get ([ "/directors/:director.json",
         var movie_list = [];
 
         console.log ("movies found ... " + movies.length);
-
-        // { "_id" : "Casino_1995",             "name" : "Casino_1995",             "directors_id" : "Scorsese", "description" : "A tale of greed, deception, money, power, and murder occur between two best friends: a mafia enforcer and a casino executive, compete against each other over a gambling empire, and over a fast living and fast loving socialite." }
-        // { "_id" : "Goodfellas_1990",         "name" : "Goodfellas_1990",         "directors_id" : "Scorsese", "description" : "The story of Henry Hill and his life in the mob, covering his relationship with his wife Karen Hill and his mob partners Jimmy Conway and Tommy DeVito in the Italian-American crime syndicate." }
-        // { "_id" : "Kundun_1997",             "name" : "Kundun_1997",             "directors_id" : "Scorsese", "description" : "From childhood to adulthood, Tibets fourteenth Dalai Lama deals with Chinese oppression and other problems." }
-        // { "_id" : "Mean_Streets_1973",       "name" : "Mean_Streets_1973",       "directors_id" : "Scorsese", "description" : "A small-time hood aspires to work his way up the ranks of a local mob." }
-        // { "_id" : "Raging_Bull_1980",        "name" : "Raging_Bull_1980",        "directors_id" : "Scorsese", "description" : "The life of boxer Jake LaMotta, as the violence and temper that leads him to the top in the ring destroys his life outside of it." }
-        // { "_id" : "Taxi_Driver_1976",        "name" : "Taxi_Driver_1976",        "directors_id" : "Scorsese", "description" : "A mentally unstable veteran works as a nighttime taxi driver in New York City, where the perceived decadence and sleaze fuels his urge for violent action by attempting to liberate a presidential campaign worker and an underage prostitute." }
-        // { "_id" : "The_Color_of_Money_1986", "name" : "The_Color_of_Money_1986", "directors_id" : "Scorsese", "description" : "Fast Eddie Felson teaches a cocky but immensely talented protege the ropes of pool hustling, which in turn inspires him to make an unlikely comeback." }
 
         if (err)
             {
@@ -356,6 +356,7 @@ v1.get ([ "/directors/:director/movies/:movie.json",
     // EX:      /directors/Quentin/movies/Pulp_Fiction_1994.json
     // DESC:    get one movie by a director
     // RETURNS: json
+    // NOTES:   mongodb-ready
 
     // ex: Quentin
     var director = request.params.director;
@@ -363,13 +364,46 @@ v1.get ([ "/directors/:director/movies/:movie.json",
     // ex: Pulp_Fiction_1994
     var movie = request.params.movie;
 
-    var rc = 0;
-    var message = "Found director: " + director + ", movie: " + movie;
+    // $mongo movieapp --quiet --eval 'db.movies.find ({ name: "Taxi_Driver_1976" })'
+    //
+    // { "_id" : "Taxi_Driver_1976",
+    //   "name" : "Taxi_Driver_1976",
+    //   "directors_id" : "Scorsese",
+    //   "description" : "A mentally unstable veteran ..." }
 
-    // return json response
-    var jsonOut = { "rc": rc, "message": message, "data": { "director": director, "moviename": movie, "moviejpg": movie + ".jpg", "moviejson": movie + ".json" }};
-    response.setHeader ("Content-Type", "application/json");
-    response.end (JSON.stringify (jsonOut));
+    // mongodb: get movies from directror
+    m_movies.find ({ name: movie }).toArray (function (err, movies)
+        {
+        var rc = 0;
+        var message = "";
+
+        console.log ("movies found ... " + movies.length);
+
+        // return json error
+        if (err)
+            {
+            rc = 1;
+            message = "ERROR: Unable to find movie in mongodb (db error): " + movie;
+            console.log (message);
+            }
+        else if (movies.length == 0)
+            {
+            rc = 1;
+            message = "ERROR: Unable to find movie in mongodb (not found error): " + movie;
+            console.log (message);
+            }
+        else
+            {
+            rc = 0;
+            message = "found movie in mongodb: " + movie;
+            console.log (message);
+            }
+
+        // return json response
+        var jsonOut = { "rc": rc, "message": message, "data": { "director": director, "moviename": movie, "moviejpg": movie + ".jpg", "moviejson": movie + ".json" }};
+        response.setHeader ("Content-Type", "application/json");
+        response.end (JSON.stringify (jsonOut));
+        });
     });
 
 v1.get ([ "/directors/:director/movies.json",
@@ -377,7 +411,7 @@ v1.get ([ "/directors/:director/movies.json",
     {
     // EX:    /directors/Quentin/movies.json
     // DESC:  get all movies by a director
-    // NOTE:  TODO: mongodb
+    // NOTE:  mongodb-ready
 
     // ex: Quentin
     var director = request.params.director;

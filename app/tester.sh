@@ -96,6 +96,7 @@ get_one_movie_by_a_director ()
     printf "curl: GET: /v1/directors/Quentin/movies/Pulp_Fiction_1994.json\n"
     printf "\n"
     curl --request GET http://localhost:8080/v1/directors/Quentin/movies/Pulp_Fiction_1994.json
+    #curl --request GET http://localhost:8080/v1/directors/Quentin/movies/bogus_1994.json
     printf "\n"
     printf "\n"
     }
@@ -316,8 +317,8 @@ main ()
 
     #get_all_directors                   # mongo-ready
     #get_one_director_and_their_movies   # mongo-ready
-    get_all_movies_by_a_director
-    #get_one_movie_by_a_director
+    #get_all_movies_by_a_director        # mongo-ready
+    get_one_movie_by_a_director
 
     ##put_create_all_directors
     #put_create_one_director                # Landis
