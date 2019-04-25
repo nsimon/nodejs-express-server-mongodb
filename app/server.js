@@ -146,7 +146,7 @@ MongoClient.connect (db_url, function (err, database)
         }
     else
         {
-        console.log ("Connected successfully to database: " + db_name);
+        console.log ("Connected to mongodb: " + db_name);
 
         // Initialize global mongo db vars
         m_db        = database;
@@ -257,6 +257,7 @@ v1.get ([ "/directors.json",
     // EX:      /directors.json
     // DESC:    get all directors
     // RETURNS: json
+    // NOTE:    mongodb-ready
 
     // mongodb: get director names
     m_directors.find ({ }).toArray (function (err, directors)
@@ -294,24 +295,37 @@ v1.get ([ "/directors/:director.json",
           "/directors/:director.xml" ], (request, response) =>
     {
     // EX:      /directors/Quentin.json
-    // DESC:    get director and their movies
+    // DESC:    get one director and their movies
     // RETURNS: json
+    // NOTE:    TODO: mongodb
 
     // ex: Quentin
     var director = request.params.director;
-    console.log ("director ... " + director);
+    console.log ("director ....... " + director);
 
-    // each folder is the name of a director
-    glob ("../static/directors/" + director + "/*.json", (err, movies) =>
+    // $mongo movieapp --eval 'db.movies.find( { directors_id: "Scorsese" } )'
+
+    // mongodb: get movies from directror
+    m_movies.find ({ directors_id: director }).toArray (function (err, movies)
         {
-        var rc1;
+        var rc;
         var jsonOut;
         var movie_list = [];
+
+        console.log ("movies found ... " + movies.length);
+
+        // { "_id" : "Casino_1995",             "name" : "Casino_1995",             "directors_id" : "Scorsese", "description" : "A tale of greed, deception, money, power, and murder occur between two best friends: a mafia enforcer and a casino executive, compete against each other over a gambling empire, and over a fast living and fast loving socialite." }
+        // { "_id" : "Goodfellas_1990",         "name" : "Goodfellas_1990",         "directors_id" : "Scorsese", "description" : "The story of Henry Hill and his life in the mob, covering his relationship with his wife Karen Hill and his mob partners Jimmy Conway and Tommy DeVito in the Italian-American crime syndicate." }
+        // { "_id" : "Kundun_1997",             "name" : "Kundun_1997",             "directors_id" : "Scorsese", "description" : "From childhood to adulthood, Tibets fourteenth Dalai Lama deals with Chinese oppression and other problems." }
+        // { "_id" : "Mean_Streets_1973",       "name" : "Mean_Streets_1973",       "directors_id" : "Scorsese", "description" : "A small-time hood aspires to work his way up the ranks of a local mob." }
+        // { "_id" : "Raging_Bull_1980",        "name" : "Raging_Bull_1980",        "directors_id" : "Scorsese", "description" : "The life of boxer Jake LaMotta, as the violence and temper that leads him to the top in the ring destroys his life outside of it." }
+        // { "_id" : "Taxi_Driver_1976",        "name" : "Taxi_Driver_1976",        "directors_id" : "Scorsese", "description" : "A mentally unstable veteran works as a nighttime taxi driver in New York City, where the perceived decadence and sleaze fuels his urge for violent action by attempting to liberate a presidential campaign worker and an underage prostitute." }
+        // { "_id" : "The_Color_of_Money_1986", "name" : "The_Color_of_Money_1986", "directors_id" : "Scorsese", "description" : "Fast Eddie Felson teaches a cocky but immensely talented protege the ropes of pool hustling, which in turn inspires him to make an unlikely comeback." }
 
         if (err)
             {
             rc = 1;
-            message = "Unable to read movies";
+            message = "Unable to get movies from mongodb";
             }
         else
             {
@@ -321,7 +335,7 @@ v1.get ([ "/directors/:director.json",
             // push a json key:value pair for each movie
             for (var i = 0; i < movies.length; i ++)
                 {
-                moviename = path.parse (movies [i]).name;               // ex: Pulp_Fiction_1994
+                moviename = movies [i].name;                            // ex: Pulp_Fiction_1994
 
                 movie_list.push ({ "moviename": moviename,              // ex: Pulp_Fiction_1994
                                    "moviejpg":  moviename + ".jpg",     // ex: Pulp_Fiction_1994.jpg
