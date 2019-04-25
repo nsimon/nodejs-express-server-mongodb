@@ -314,9 +314,9 @@ main ()
     #get_home_page_v1
     #get_home_page_v2
 
-    #get_all_directors                   # mondo-ready
-    get_one_director_and_their_movies
-    #get_all_movies_by_a_director
+    #get_all_directors                   # mongo-ready
+    #get_one_director_and_their_movies   # mongo-ready
+    get_all_movies_by_a_director
     #get_one_movie_by_a_director
 
     ##put_create_all_directors

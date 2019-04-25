@@ -297,7 +297,7 @@ v1.get ([ "/directors/:director.json",
     // EX:      /directors/Quentin.json
     // DESC:    get one director and their movies
     // RETURNS: json
-    // NOTE:    TODO: mongodb
+    // NOTE:    mongodb-ready
 
     // ex: Quentin
     var director = request.params.director;
@@ -325,7 +325,7 @@ v1.get ([ "/directors/:director.json",
         if (err)
             {
             rc = 1;
-            message = "Unable to get movies from mongodb";
+            message = "ERROR: Unable to get movies from mongodb";
             }
         else
             {
@@ -377,31 +377,38 @@ v1.get ([ "/directors/:director/movies.json",
     {
     // EX:    /directors/Quentin/movies.json
     // DESC:  get all movies by a director
+    // NOTE:  TODO: mongodb
 
     // ex: Quentin
     var director = request.params.director;
+    console.log ("director ....... " + director);
 
     // each folder is the name of a director
-    glob ("../static/directors/" + director + "/*.json", (err, movies) =>
+    // glob ("../static/directors/" + director + "/*.json", (err, movies) =>
+
+    // mongodb: get movies from directror
+    m_movies.find ({ directors_id: director }).toArray (function (err, movies)
         {
-        var rc1;
+        var rc;
         var jsonOut;
         var movie_list = [];
+
+        console.log ("movies found ... " + movies.length);
 
         if (err)
             {
             rc = 1;
-            message = "ERROR: unable to glob() movies";
+            message = "ERROR: Unable to get movies from mongodb";
             }
         else
             {
             rc = 0;
-            message = "Movies found: " + movies.length;
+            message = "movies found: " + movies.length;
 
             // push a json key:value pair for each movie
             for (var i = 0; i < movies.length; i ++)
                 {
-                moviename = path.parse (movies [i]).name;             // ex: Pulp_Fiction_1994
+                moviename = movies [i].name;                          // ex: Pulp_Fiction_1994
 
                 movie_list.push ({ "moviejson": moviename + ".json",  // ex: Pulp_Fiction_1994.json
                                    "moviename": moviename});          // ex: Pulp_Fiction_1994
