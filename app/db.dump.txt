@@ -4,7 +4,7 @@ create.load.db.sh
 db.dropDatabase ()
 ==================
 
-{ "ok" : 1 }
+{ "dropped" : "movieapp", "ok" : 1 }
 
 ================
 db.users.save ()
@@ -177,9 +177,9 @@ db.movies.find ()
 { "_id" : "Kill_Bill_V2_2004", "name" : "Kill_Bill_V2_2004", "directors_id" : "Quentin", "description" : "The Bride continues her quest of vengeance against her former boss and lover Bill, the reclusive bouncer Budd, and the treacherous, one-eyed Elle." }
 { "_id" : "Pulp_Fiction_1994", "name" : "Pulp_Fiction_1994", "directors_id" : "Quentin", "description" : "The lives of two mob hitmen, a boxer, a gangsters wife, and a pair of diner bandits intertwine in four tales of violence and redemption." }
 { "_id" : "Reservoir_Dogs_1992", "name" : "Reservoir_Dogs_1992", "directors_id" : "Quentin", "description" : "When a simple jewelry heist goes horribly wrong, the surviving criminals begin to suspect that one of them is a police informant." }
-{ "_id" : "Juno_2007", "name" : "Juno_2017", "directors_id" : "Reitman", "description" : "Faced with an unplanned pregnancy, an offbeat young woman makes an unusual decision regarding her unborn child." }
-{ "_id" : "Thank_You_For_Smoking_2005", "name" : "Juno_2017", "directors_id" : "Reitman", "description" : "Satirical comedy follows the machinations of Big Tobaccos chief spokesman, Nick Naylor, who spins on behalf of cigarettes while trying to remain a role model for his twelve-year-old son." }
-{ "_id" : "Up_in_the_Air_2009", "name" : "Juno_2017", "directors_id" : "Reitman", "description" : "Ryan Bingham enjoys living out of a suitcase for his job, travelling around the country firing people, but finds that lifestyle threatened by the presence of a potential love interest, and a new hire." }
+{ "_id" : "Juno_2007", "name" : "Juno_2007", "directors_id" : "Reitman", "description" : "Faced with an unplanned pregnancy, an offbeat young woman makes an unusual decision regarding her unborn child." }
+{ "_id" : "Thank_You_For_Smoking_2005", "name" : "Thank_You_For_Smoking_2005", "directors_id" : "Reitman", "description" : "Satirical comedy follows the machinations of Big Tobaccos chief spokesman, Nick Naylor, who spins on behalf of cigarettes while trying to remain a role model for his twelve-year-old son." }
+{ "_id" : "Up_in_the_Air_2009", "name" : "Up_in_the_Air_2009", "directors_id" : "Reitman", "description" : "Ryan Bingham enjoys living out of a suitcase for his job, travelling around the country firing people, but finds that lifestyle threatened by the presence of a potential love interest, and a new hire." }
 { "_id" : "Casino_1995", "name" : "Casino_1995", "directors_id" : "Scorsese", "description" : "A tale of greed, deception, money, power, and murder occur between two best friends: a mafia enforcer and a casino executive, compete against each other over a gambling empire, and over a fast living and fast loving socialite." }
 { "_id" : "Goodfellas_1990", "name" : "Goodfellas_1990", "directors_id" : "Scorsese", "description" : "The story of Henry Hill and his life in the mob, covering his relationship with his wife Karen Hill and his mob partners Jimmy Conway and Tommy DeVito in the Italian-American crime syndicate." }
 { "_id" : "Kundun_1997", "name" : "Kundun_1997", "directors_id" : "Scorsese", "description" : "From childhood to adulthood, Tibets fourteenth Dalai Lama deals with Chinese oppression and other problems." }

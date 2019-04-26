@@ -140,15 +140,15 @@ mongo movieapp --quiet --eval 'db.movies.save
 ###########
 
 mongo movieapp --quiet --eval 'db.movies.save
-  ({ "_id" : "Juno_2007", "name" : "Juno_2017", "directors_id" : "Reitman",
+  ({ "_id" : "Juno_2007", "name" : "Juno_2007", "directors_id" : "Reitman",
      "description" : "Faced with an unplanned pregnancy, an offbeat young woman makes an unusual decision regarding her unborn child." })'
 
 mongo movieapp --quiet --eval 'db.movies.save
-  ({ "_id" : "Thank_You_For_Smoking_2005", "name" : "Juno_2017", "directors_id" : "Reitman",
+  ({ "_id" : "Thank_You_For_Smoking_2005", "name" : "Thank_You_For_Smoking_2005", "directors_id" : "Reitman",
      "description" : "Satirical comedy follows the machinations of Big Tobaccos chief spokesman, Nick Naylor, who spins on behalf of cigarettes while trying to remain a role model for his twelve-year-old son." })'
 
 mongo movieapp --quiet --eval 'db.movies.save
-  ({ "_id" : "Up_in_the_Air_2009", "name" : "Juno_2017", "directors_id" : "Reitman",
+  ({ "_id" : "Up_in_the_Air_2009", "name" : "Up_in_the_Air_2009", "directors_id" : "Reitman",
      "description" : "Ryan Bingham enjoys living out of a suitcase for his job, travelling around the country firing people, but finds that lifestyle threatened by the presence of a potential love interest, and a new hire." })'
 
 ############
