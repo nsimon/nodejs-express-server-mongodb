@@ -143,6 +143,8 @@ MongoClient.connect (db_url, function (err, database)
     if (err)
         {
         console.log ("ERROR: unable to connect to mongodb database: " + db_name);
+        console.log ("");
+        process.exit (0);
         }
     else
         {
