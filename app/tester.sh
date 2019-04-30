@@ -73,11 +73,12 @@ put_create_one_director ()
     printf "=======================\n"
     printf "\n"
     printf "/static/directors/ BEFORE:\n"
-    ls -l ~/cwb206/week10/nodejs-express-server/static/directors 2>&1
+    ls -l $DIRECTOR_FOLDER 2>&1
     printf "\n"
     printf "curl: PUT: /v1/directors/Landis.json\n"
     printf "\n"
-    JSON_OUT="{ \"rc\": null, \"message\": null, \"data\": { \"director\": \"Landis\" }}"
+    JSON_OUT="{ \"_id\" : \"Landis\", \"name\" : \"Landis\", \"description\" : \"John Landis began his career in the mail room of 20th Century-Fox. A high-school dropout, 18-year-old Landis made his way to Yugoslavia to work as a production assistant on Kelly's Heroes (1970). Remaining in Europe, Landis found work as an actor, extra and stuntman in many of the Spanish/Italian "spaghetti" westerns.\" }"
+
     curl --request PUT \
          --header  "Content-Type: application/json" \
          --data "$JSON_OUT" \
@@ -85,7 +86,7 @@ put_create_one_director ()
     printf "\n"
     printf "\n"
     printf "/static/directors/ AFTER:\n"
-    ls -l ~/cwb206/week10/nodejs-express-server/static/directors 2>&1
+    ls -l $DIRECTOR_FOLDER 2>&1
     printf "\n"
     }
 
@@ -96,7 +97,7 @@ put_create_movie_for_director ()
     printf "=============================\n"
     printf "\n"
     printf "/static/directors/Landis/ BEFORE:\n"
-    ls -l ~/cwb206/week10/nodejs-express-server/static/directors/Landis/*.* 2>&1
+    ls -l $DIRECTOR_FOLDER/Landis/*.* 2>&1
     printf "\n"
     printf "curl: PUT: /v1/directors/Landis/movies.json\n"
     printf "\n"
@@ -107,7 +108,7 @@ put_create_movie_for_director ()
     printf "\n"
     printf "\n"
     printf "/static/directors/Landis/ AFTER:\n"
-    ls -l ~/cwb206/week10/nodejs-express-server/static/directors/Landis/*.* 2>&1
+    ls -l $DIRECTOR_FOLDER/Landis/*.* 2>&1
     printf "\n"
     }
 
@@ -118,7 +119,7 @@ post_update_movies_for_a_director ()
     printf "==============================\n"
     printf "\n"
     printf "/static/directors/Quentin/ BEFORE:\n"
-    ls -l ~/cwb206/week10/nodejs-express-server/static/directors/Quentin/*.* 2>&1
+    ls -l $DIRECTOR_FOLDER/Quentin/*.* 2>&1
     printf "\n"
     printf "curl: POST: /v1/directors/Quentin/movies.json\n"
     printf "\n"
@@ -133,7 +134,7 @@ post_update_movies_for_a_director ()
     printf "\n"
     printf "\n"
     printf "/static/directors/Quentin/ AFTER:\n"
-    ls -l ~/cwb206/week10/nodejs-express-server/static/directors/Quentin/*.* 2>&1
+    ls -l $DIRECTOR_FOLDER/Quentin/*.* 2>&1
     printf "\n"
     }
 
@@ -144,7 +145,7 @@ post_change_director_name_to_Peale ()
     printf "===============================\n"
     printf "\n"
     printf "/static/directors/ BEFORE:\n"
-    ls -l ~/cwb206/week10/nodejs-express-server/static/directors 2>&1
+    ls -l $DIRECTOR_FOLDER 2>&1
     printf "\n"
     printf "curl: POST: /v1/directors/Peele.json\n"
     JSON_OUT="{ \"oldDirectorName\": \"Peele\", \"newDirectorName\": \"Peale\" }"
@@ -156,7 +157,7 @@ post_change_director_name_to_Peale ()
     printf "\n"
     printf "\n"
     printf "/static/directors/ AFTER:\n"
-    ls -l ~/cwb206/week10/nodejs-express-server/static/directors 2>&1
+    ls -l $DIRECTOR_FOLDER 2>&1
     printf "\n"
     }
 
@@ -167,7 +168,7 @@ post_change_director_name_to_Peele ()
     printf "===============================\n"
     printf "\n"
     printf "/static/directors/ BEFORE:\n"
-    ls -l ~/cwb206/week10/nodejs-express-server/static/directors 2>&1
+    ls -l $DIRECTOR_FOLDER 2>&1
     printf "\n"
     printf "curl: POST: /v1/directors/Peale.json\n"
     JSON_OUT="{ \"oldDirectorName\": \"Peale\", \"newDirectorName\": \"Peele\" }"
@@ -179,7 +180,7 @@ post_change_director_name_to_Peele ()
     printf "\n"
     printf "\n"
     printf "/static/directors/ AFTER:\n"
-    ls -l ~/cwb206/week10/nodejs-express-server/static/directors 2>&1
+    ls -l $DIRECTOR_FOLDER 2>&1
     printf "\n"
     }
 
@@ -190,7 +191,7 @@ post_change_movie_name ()
     printf "=================\n"
     printf "\n"
     printf "/static/directors/Landis BEFORE:\n"
-    ls -l ~/cwb206/week10/nodejs-express-server/static/directors/Landis/*.* 2>&1
+    ls -l $DIRECTOR_FOLDER/Landis/*.* 2>&1
     printf "\n"
     printf "curl: POST: /v1/directors/Landis/animal_house_1978.json\n"
     JSON_OUT="{ \"newMovieName\": \"animal_houzz_1978\" }"
@@ -202,7 +203,7 @@ post_change_movie_name ()
     printf "\n"
     printf "\n"
     printf "/static/directors/Landis AFTER:\n"
-    ls -l ~/cwb206/week10/nodejs-express-server/static/directors/Landis/*.* 2>&1
+    ls -l $DIRECTOR_FOLDER/Landis/*.* 2>&1
     printf "\n"
     }
 
@@ -213,7 +214,7 @@ delete_director_and_their_movies ()
     printf "===========================================\n"
     printf "\n"
     printf "/static/directors/Landis BEFORE:\n"
-    ls -l ~/cwb206/week10/nodejs-express-server/static/directors/Landis/*.* 2>&1
+    ls -l $DIRECTOR_FOLDER/Landis/*.* 2>&1
     printf "\n"
     printf "curl: DELETE: /v1/directors/Landis.json\n"
     printf "\n"
@@ -225,7 +226,7 @@ delete_director_and_their_movies ()
     printf "\n"
     printf "\n"
     printf "/static/directors/Landis AFTER:\n"
-    ls -l ~/cwb206/week10/nodejs-express-server/static/directors 2>&1
+    ls -l $DIRECTOR_FOLDER 2>&1
     printf "\n"
     }
 
@@ -250,19 +251,21 @@ delete_one_movie ()
 # main () #
 ###########
 
+DIRECTOR_FOLDER=~/cwb206/week12/nodejs-express-server-mongodb/static/directors
+
 main ()
     {
     printf "tester.sh.\n"
     printf "\n"
 
-    get_home_page
+    #get_home_page
 
-    get_all_directors                   # mongo-ready
-    get_one_director_and_their_movies   # mongo-ready
-    get_all_movies_by_a_director        # mongo-ready
-    get_one_movie_by_a_director
+    #get_all_directors                   # mongo-ready
+    #get_one_director_and_their_movies   # mongo-ready
+    #get_all_movies_by_a_director        # mongo-ready
+    #get_one_movie_by_a_director
 
-    #put_create_one_director                # Landis
+    put_create_one_director                # Landis
     #put_create_movie_for_director          # animal_house_1978
 
     #post_update_movies_for_a_director

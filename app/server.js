@@ -470,46 +470,67 @@ v1.put ("/directors/:director.json", (request, response) =>
     // DESC:    creates one director
     // RETURNS: 200 ok
 
-    var director = request.body.data.director;
-    console.log ("director: " + director);
+    var director = request.params.director;
+    console.log ("director ......... " + director);
 
     var directorFolder = "../static/directors/" + director;
-    console.log ("checking for directorFolder: " + directorFolder);
+    console.log ("directorFolder ... " + directorFolder);
+
+    var _id         = request.body._id;
+    var name        = request.body.name;
+    var description = request.body.description;
+
+    console.log ("_id .............. " + _id);
+    console.log ("name ............. " + name);
+    console.log ("description ...... " + description);
 
     var rc;
     var message;
 
     if (fs.existsSync (directorFolder))
         {
-        // skip
-        rc = 200;  // success
-        message = "director folder already exists: " + director;
+        rc = 500;
+        message = "ERROR: director folder already exists: " + director;
+        console.log (message);
+        response.status (rc).send ({ "rc": rc, "message": message });
         }
     else
         {
-        console.log ("creating director folder: " + director);
-
         // create director folder
         fs.mkdirSync (directorFolder);
 
         if (!fs.existsSync (directorFolder))
             {
-            // error
-            rc = 500;  // error
-            message = "ERROR: failed to create director";
+            rc = 500;
+            message = "ERROR: failed to create director folder";
+            console.log (message);
+            response.status (rc).send ({ "rc": rc, "message": message });
             }
         else
             {
-            // TODO: add director to mongodb
+            console.log ("director folder created successfully");
 
-            rc = 200;  // success
-            message = "director folder created: " + director;
+            // mongodb: save new director
+            //m_directors.save ({ "_id" : _id, "name" : name, "description" : description });
+            m_directors.save ({ "_id" : _id, "name" : name, "description" : description }, function (err, blah)
+                {
+                if (err)
+                    {
+                    rc = 500;
+                    message = "ERROR: failed to save new director to mongodb";
+                    console.log (message);
+                    }
+                else
+                    {
+                    rc = 200;
+                    message = "successfully saved new director to mongodb";
+                    console.log (message);
+                    }
+
+                response.status (rc).send ({ "rc": rc, "message": message });
+                });
             }
         }
-
-    var jsonOut = { "rc": rc, "message": message };
-
-    response.status (rc).send (jsonOut);
     });
 
 v1.put ("/directors/:director/movies.json", (request, response) =>
