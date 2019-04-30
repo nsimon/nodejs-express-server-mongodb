@@ -5,18 +5,18 @@
 /* TODO                                                                       */
 /******************************************************************************/
 
-// Add director
-// Add one movie
-// Delete director and all of their movies
-// Delete one movie
-//
-// handlers/ ?
+// Add director. DONE.
+// Add one movie. DONE.
+// Delete director and all of their movies. TODO
+// Delete one movie. TODO
 //
 // GUI: Add an "Admin" link to the home page, which enables:
 //   . Add director
 //   . Add one movie
 //   . Delete director and all of their movies
 //   . Delete one movie
+//
+// handlers/ ?
 
 /******************************************************************************/
 /* mongodb database schema                                                    */
