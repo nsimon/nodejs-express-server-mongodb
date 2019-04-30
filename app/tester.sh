@@ -112,75 +112,6 @@ put_create_movie_for_director ()
     printf "\n"
     }
 
-post_change_director_name_to_Peale ()
-    {
-    printf "===============================\n"
-    printf "Changing director name to Peale\n"
-    printf "===============================\n"
-    printf "\n"
-    printf "/static/directors/ BEFORE:\n"
-    ls -l $DIRECTOR_FOLDER 2>&1
-    printf "\n"
-    printf "curl: POST: /v1/directors/Peele.json\n"
-    JSON_OUT="{ \"oldDirectorName\": \"Peele\", \"newDirectorName\": \"Peale\" }"
-    printf "\n"
-    curl --request POST \
-         --header 'Content-Type: application/json' \
-         --data "$JSON_OUT" \
-         http://localhost:8080/v1/directors/Peele.json
-    printf "\n"
-    printf "\n"
-    printf "/static/directors/ AFTER:\n"
-    ls -l $DIRECTOR_FOLDER 2>&1
-    printf "\n"
-    }
-
-post_change_director_name_to_Peele ()
-    {
-    printf "===============================\n"
-    printf "Changing director name to Peele\n"
-    printf "===============================\n"
-    printf "\n"
-    printf "/static/directors/ BEFORE:\n"
-    ls -l $DIRECTOR_FOLDER 2>&1
-    printf "\n"
-    printf "curl: POST: /v1/directors/Peale.json\n"
-    JSON_OUT="{ \"oldDirectorName\": \"Peale\", \"newDirectorName\": \"Peele\" }"
-    printf "\n"
-    curl --request POST \
-         --header 'Content-Type: application/json' \
-         --data "$JSON_OUT" \
-         http://localhost:8080/v1/directors/Peale.json
-    printf "\n"
-    printf "\n"
-    printf "/static/directors/ AFTER:\n"
-    ls -l $DIRECTOR_FOLDER 2>&1
-    printf "\n"
-    }
-
-post_change_movie_name ()
-    {
-    printf "=================\n"
-    printf "Change movie name\n"
-    printf "=================\n"
-    printf "\n"
-    printf "/static/directors/Landis BEFORE:\n"
-    ls -l $DIRECTOR_FOLDER/Landis/*.* 2>&1
-    printf "\n"
-    printf "curl: POST: /v1/directors/Landis/animal_house_1978.json\n"
-    JSON_OUT="{ \"newMovieName\": \"animal_houzz_1978\" }"
-    printf "\n"
-    curl --request POST \
-         --header 'Content-Type: application/json' \
-         --data "$JSON_OUT" \
-         http://localhost:8080/v1/directors/Landis/animal_house_1978.json
-    printf "\n"
-    printf "\n"
-    printf "/static/directors/Landis AFTER:\n"
-    ls -l $DIRECTOR_FOLDER/Landis/*.* 2>&1
-    printf "\n"
-    }
-
 delete_director_and_their_movies ()
     {
     printf "===========================================\n"
@@ -239,10 +170,6 @@ main ()
 
     #put_create_one_director             # mongo-ready   // Landis
     #put_create_movie_for_director       # mongo-ready   // Landis/animal_house_1978
-
-    #post_change_movie_name
-    #post_change_director_name_to_Peale
-    #post_change_director_name_to_Peele
 
     #delete_director_and_their_movies
     #delete_one_movie
