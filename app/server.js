@@ -554,8 +554,8 @@ v1.put ("/directors/:director/movies.json", (request, response) =>
         {
         rc = 500;
         message = "ERROR: director folder does not exist";
-        var jsonOut = { "rc": rc, "message": message };
-        response.status (rc).send (jsonOut);
+        console.log (message);
+        response.status (rc).send ({ "rc": rc, "message": message });
         }
     else
         {
@@ -584,20 +584,19 @@ v1.put ("/directors/:director/movies.json", (request, response) =>
         // the error event
         form.on ("error", () =>
             {
-            message = "ERROR: upload failed";
             rc = 500;
-            var jsonOut = { "rc": rc, "message": message };
-            response.status (rc).send (jsonOut);
+            message = "ERROR: upload failed";
+            console.log (message);
+            response.status (rc).send ({ "rc": rc, "message": message });
             });
 
         // the end event happens when all uploads are completed
         form.on ("end", () =>
             {
-            console.log ("");
-            message = "upload successful";
             rc = 200;
-            var jsonOut = { "rc": rc, "message": message, "data": { "uploadedMovieFiles": uploadedMovieFiles }};
-            response.status (rc).send (jsonOut);
+            message = "upload successful";
+            console.log (message);
+            response.status (rc).send ({ "rc": rc, "message": message });
             });
         }
     });

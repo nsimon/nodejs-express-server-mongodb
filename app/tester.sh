@@ -103,7 +103,7 @@ put_create_movie_for_director ()
     printf "\n"
     curl --request PUT \
          --header "Expect:" \
-         --form "moviejpg=@movies_to_upload/Landis/animal_house_1978.jpg"  --form "moviejson=@movies_to_upload/Landis/animal_house_1978.json" \
+         --form "moviejpg=@movies_to_upload/Landis/animal_house_1978.jpg" \
          http://localhost:8080/v1/directors/Landis/movies.json
     printf "\n"
     printf "\n"
@@ -263,10 +263,10 @@ main ()
     #get_all_directors                   # mongo-ready
     #get_one_director_and_their_movies   # mongo-ready
     #get_all_movies_by_a_director        # mongo-ready
-    #get_one_movie_by_a_director
+    #get_one_movie_by_a_director         # mongo-ready
 
-    put_create_one_director                # Landis
-    #put_create_movie_for_director          # animal_house_1978
+    #put_create_one_director             # mongo-ready   // Landis
+    put_create_movie_for_director        # ...           // animal_house_1978
 
     #post_update_movies_for_a_director
     #post_change_movie_name
