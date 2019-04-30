@@ -78,7 +78,6 @@ put_create_one_director ()
     printf "curl: PUT: /v1/directors/Landis.json\n"
     printf "\n"
     JSON_OUT="{ \"_id\" : \"Landis\", \"name\" : \"Landis\", \"description\" : \"John Landis began his career in the mail room of 20th Century-Fox. A high-school dropout, 18-year-old Landis made his way to Yugoslavia to work as a production assistant on Kelly's Heroes (1970). Remaining in Europe, Landis found work as an actor, extra and stuntman in many of the Spanish/Italian "spaghetti" westerns.\" }"
-
     curl --request PUT \
          --header  "Content-Type: application/json" \
          --data "$JSON_OUT" \
@@ -101,11 +100,23 @@ put_create_movie_for_director ()
     printf "\n"
     printf "curl: PUT: /v1/directors/Landis/movies.json\n"
     printf "\n"
+
+    # (1) Add the movie fields to mongodb
+    JSON_OUT="{ \"_id\" : \"Animal_House_1978\", \"name\" : \"Animal_House_1978\", \"directors_id\" : \"Landis\", \"description\" : \"At a 1962 college, Dean Vernon Wormer is determined to expel the entire Delta Tau Chi Fraternity, but those troublemakers have other plans for him.\" }"
+    curl --request PUT \
+         --header  "Content-Type: application/json" \
+         --data "$JSON_OUT" \
+         http://localhost:8080/v1/directors/Landis/movies.json
+    printf "\n"
+    printf "\n"
+
+    # (2) Upload the poster
     curl --request PUT \
          --header "Expect:" \
          --form "moviejpg=@movies_to_upload/Landis/animal_house_1978.jpg" \
          http://localhost:8080/v1/directors/Landis/movies.json
     printf "\n"
+
     printf "\n"
     printf "/static/directors/Landis/ AFTER:\n"
     ls -l $DIRECTOR_FOLDER/Landis/*.* 2>&1
@@ -265,8 +276,8 @@ main ()
     #get_all_movies_by_a_director        # mongo-ready
     #get_one_movie_by_a_director         # mongo-ready
 
-    #put_create_one_director             # mongo-ready   // Landis
-    put_create_movie_for_director        # ...           // animal_house_1978
+    put_create_one_director              # mongo-ready   // Landis
+    put_create_movie_for_director        # mongo-ready   // Landis/animal_house_1978
 
     #post_update_movies_for_a_director
     #post_change_movie_name

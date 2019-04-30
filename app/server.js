@@ -144,6 +144,7 @@ MongoClient.connect (db_url, function (err, database)
     else
         {
         console.log ("Connected to mongodb: " + db_name);
+        console.log ("");
 
         // Initialize global mongo db vars
         m_db        = database;
@@ -511,19 +512,18 @@ v1.put ("/directors/:director.json", (request, response) =>
             console.log ("director folder created successfully");
 
             // mongodb: save new director
-            //m_directors.save ({ "_id" : _id, "name" : name, "description" : description });
-            m_directors.save ({ "_id" : _id, "name" : name, "description" : description }, function (err, blah)
+            m_directors.save ({ "_id" : _id, "name" : name, "description" : description }, function (err)
                 {
                 if (err)
                     {
                     rc = 500;
-                    message = "ERROR: failed to save new director to mongodb";
+                    message = "ERROR: failed to save director to mongodb";
                     console.log (message);
                     }
                 else
                     {
                     rc = 200;
-                    message = "successfully saved new director to mongodb";
+                    message = "successfully saved director to mongodb";
                     console.log (message);
                     }
 
@@ -531,6 +531,8 @@ v1.put ("/directors/:director.json", (request, response) =>
                 });
             }
         }
+
+    console.log ("");
     });
 
 v1.put ("/directors/:director/movies.json", (request, response) =>
@@ -538,66 +540,120 @@ v1.put ("/directors/:director/movies.json", (request, response) =>
     // EX:      /v1/directors/Landis/movies.json
     // DESC:    creates movie for director
     // RETURNS: 200 ok
-
-    // ex: Landis
-    var director = request.params.director;
+    // NOTE:    gets called in 2 different ways:
+    //          1. To upload poster
+    //          2. To save movie fields to mongodb
 
     var rc;
     var message;
 
-    // ex: ../static/directors/Landis
-    var directorFolder = "../static/directors/" + director;
-    console.log ("directorFolder: " + directorFolder);
+    // ex: Landis
+    var director = request.params.director;
+    console.log ("director: " + director);
 
-    // if director (folder) does not exist...
-    if (!fs.existsSync (directorFolder))
+    // ex1: multipart/form-data; boundary=------------------------2049cf9aa2227d89
+    // ex2: application/json
+    var content_type = request.header ("content-type");
+    console.log ("content_type: " + content_type);
+
+    if (content_type == "application/json")
         {
-        rc = 500;
-        message = "ERROR: director folder does not exist";
-        console.log (message);
-        response.status (rc).send ({ "rc": rc, "message": message });
+        var _id          = request.body._id;
+        var name         = request.body.name;
+        var directors_id = request.body.directors_id;
+        var description  = request.body.description;
+
+        console.log ("_id ............ " + _id);
+        console.log ("name ........... " + name);
+        console.log ("directors_id ... " + directors_id);
+        console.log ("description .... " + description);
+
+        // save movie fields to mongodb
+        m_movies.save ({ "_id" : _id, "name" : name, "directors_id" : directors_id, "description" : description }, function (err)
+            {
+            // { "_id" : "In_Bruges_2008",
+            //   "name" : "In_Bruges_2008",
+            //   "directors_id" : "McDonagh",
+            //   "description" : "Guilt-stricken after a job gone wrong, hitman Ray and his partner await orders from their ruthless boss in Bruges, Belgium, the last place in the world Ray wants to be."
+            // }
+
+            if (err)
+                {
+                rc = 500;
+                message = "ERROR: failed to save movie to mongodb";
+                console.log (message);
+                }
+            else
+                {
+                rc = 200;
+                message = "successfully saved movie to mongodb";
+                console.log (message);
+                }
+
+            response.status (rc).send ({ "rc": rc, "message": message });
+            });
         }
     else
         {
-        // create a new formidable object
-        var form = new formidable.IncomingForm ();
+        // receive poster being uploaded
 
-        // appended for each movie created
-        var uploadedMovieFiles = [];
+        // ex: ../static/directors/Landis
+        var directorFolder = "../static/directors/" + director;
+        console.log ("directorFolder: " + directorFolder);
 
-        // parse the incoming form
-        form.parse (request);
-
-        // the fileBegin event happens when each file upload begins
-        form.on ("fileBegin", (name, file) =>
-            {
-            file.path = directorFolder + "/" + file.name;
-            });
-
-        // the file event happens when each ile completes it's upload
-        form.on ("file", (name, file) =>
-            {
-            console.log ("uploaded file to: " + file.path);
-            uploadedMovieFiles.push ({ "file": file.path });
-            });
-
-        // the error event
-        form.on ("error", () =>
+        // if director (folder) does not exist...
+        if (!fs.existsSync (directorFolder))
             {
             rc = 500;
-            message = "ERROR: upload failed";
+            message = "ERROR: director folder does not exist";
             console.log (message);
             response.status (rc).send ({ "rc": rc, "message": message });
-            });
-
-        // the end event happens when all uploads are completed
-        form.on ("end", () =>
+            }
+        else
             {
-            rc = 200;
-            message = "upload successful";
-            console.log (message);
-            response.status (rc).send ({ "rc": rc, "message": message });
-            });
+            // create a new formidable object
+            var form = new formidable.IncomingForm ();
+
+            // appended for each movie created
+            var uploadedMovieFiles = [];
+
+            // parse the incoming form
+            form.parse (request);
+
+            // the fileBegin event happens when each file upload begins
+            form.on ("fileBegin", (name, file) =>
+                {
+                console.log ("fileBegin()")
+                file.path = directorFolder + "/" + file.name;
+                });
+
+            // the file event happens when each file completes it's upload
+            form.on ("file", (name, file) =>
+                {
+                console.log ("file(): file uploaded to: " + file.path);
+                uploadedMovieFiles.push ({ "file": file.path });
+                });
+
+            // the error event
+            form.on ("error", () =>
+                {
+                rc = 500;
+                message = "ERROR: upload failed";
+                console.log (message);
+                response.status (rc).send ({ "rc": rc, "message": message });
+                });
+
+            // the end event happens when the upload completes
+            form.on ("end", () =>
+                {
+                console.log ("end()");
+
+                rc = 200;
+                message = "successfully saved movie poster";
+                console.log (message);
+                response.status (rc).send ({ "rc": rc, "message": message });
+                });
+            }
         }
     });
 
