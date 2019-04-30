@@ -4,48 +4,13 @@
 # Desc ..... Test script to run client cURL calls to the nodejs/express server.
 
 
-browser_gets ()
+get_home_page ()
     {
-    printf "================\n"
-    printf "GET: /pages/home\n"
-    printf "================\n"
-    printf "\n"
-    curl --request GET http://localhost:8080/pages/home
-    printf "\n"
-
-    printf "============================\n"
-    printf "GET: /pages/director/Quentin\n"
-    printf "============================\n"
-    printf "\n"
-    curl --request GET http://localhost:8080/pages/director/Quentin
-    printf "\n"
-
-    printf "==============================================\n"
-    printf "GET: /pages/director/Quentin/Pulp_Fiction_1994\n"
-    printf "==============================================\n"
-    printf "\n"
-    curl --request GET http://localhost:8080/pages/director/Quentin/Pulp_Fiction_1994
-    printf "\n"
-    }
-
-get_home_page_v1 ()
-    {
-    printf "======================\n"
-    printf "Get the home page (v1)\n"
-    printf "======================\n"
+    printf "==================\n"
+    printf "Get the home page)\n"
+    printf "==================\n"
     printf "\n"
     curl --request GET http://localhost:8080/v1/
-    printf "\n"
-    printf "\n"
-    }
-
-get_home_page_v2 ()
-    {
-    printf "======================\n"
-    printf "Get the home page (v2)\n"
-    printf "======================\n"
-    printf "\n"
-    curl --request GET http://localhost:8080/v2/
     printf "\n"
     printf "\n"
     }
@@ -97,26 +62,6 @@ get_one_movie_by_a_director ()
     printf "\n"
     curl --request GET http://localhost:8080/v1/directors/Quentin/movies/Pulp_Fiction_1994.json
     #curl --request GET http://localhost:8080/v1/directors/Quentin/movies/bogus_1994.json
-    printf "\n"
-    printf "\n"
-    }
-
-put_create_all_directors ()
-    {
-    printf "======================\n"
-    printf "Creating all directors\n"
-    printf "======================\n"
-    printf "\n"
-    printf "curl: PUT: /v1/directors.json\n"
-    printf "\n"
-    DIRECTORS_JSON="[{ \"name\": \"McDonagh\" }, { \"name\": \"Peele\" }, { \"name\": \"Quentin\" }, { \"name\": \"Reitman\" }, { \"name\": \"Scorsese\" }, { \"name\": \"Stokeley\" }]"
-    JSON_OUT="{ \"rc\": null, \"message\": null, \"data\": { \"directors\": $DIRECTORS_JSON }}"
-    printf "JSON_OUT ......... $JSON_OUT\n"
-    printf "\n"
-    curl --request PUT \
-         --header  "Content-Type: application/json" \
-         --data "$JSON_OUT" \
-         http://localhost:8080/v1/directors.json
     printf "\n"
     printf "\n"
     }
@@ -310,17 +255,13 @@ main ()
     printf "tester.sh.\n"
     printf "\n"
 
-    #browser_gets
+    get_home_page
 
-    #get_home_page_v1
-    #get_home_page_v2
-
-    #get_all_directors                   # mongo-ready
-    #get_one_director_and_their_movies   # mongo-ready
-    #get_all_movies_by_a_director        # mongo-ready
+    get_all_directors                   # mongo-ready
+    get_one_director_and_their_movies   # mongo-ready
+    get_all_movies_by_a_director        # mongo-ready
     get_one_movie_by_a_director
 
-    ##put_create_all_directors
     #put_create_one_director                # Landis
     #put_create_movie_for_director          # animal_house_1978
 

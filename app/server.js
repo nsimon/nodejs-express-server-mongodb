@@ -469,69 +469,6 @@ v1.get ("*", (request, response) =>
 /* API ROUTES: v1.put()                                                       */
 /******************************************************************************/
 
-v1.put ("/directors.json", (request, response) =>
-    {
-    // EX:      /v1/directors.json
-    // DESC:    creates all directors from the data (body must contain data for ALL directors)
-    // RETURNS: 200 ok
-
-    var mkdirFailed = 0;  // reset to 1 on failure
-
-    // ex: directors: [{"name":"McDonagh"},{"name":"Peele"},{"name":"Quentin"},{"name":"Reitman"},{"name":"Scorsese"}]
-    var directors = request.body.data.directors;
-
-    // appended for each folder created
-    var directors_created_list = [];
-
-    async.forEach (directors, (element, cb) =>
-        {
-        var directorFolder = "../static/directors/" + element.name;
-        //console.log ("Checking for directorFolder: " + directorFolder);
-
-        // if director (folder) exists...
-        if (fs.existsSync (directorFolder))
-            {
-            // skip
-            console.log ("directorFolder exists: " + directorFolder);
-            }
-        else
-            {
-            // create director (folder)
-            console.log ("creating directorFolder: " + directorFolder);
-
-            fs.mkdirSync (directorFolder);
-
-            if (!fs.existsSync (directorFolder))
-                {
-                // error
-                mkdirFailed = 1;
-                }
-            else
-                {
-                directors_created_list.push ({ "name": element.name });
-                }
-            }
-        });
-
-    var rc;
-    var message;
-
-    if (mkdirFailed)
-        {
-        rc = 500;  // error
-        message = "Failed to create director";
-        }
-    else
-        {
-        rc = 200;  // success
-        message = "directors created: " + directors_created_list.length;
-        }
-
-    var jsonOut = { "rc": rc, "message": message, "data": { "directors_created_list": directors_created_list }};
-
-    response.status (rc).send (jsonOut);
-    });
-
 v1.put ("/directors/:director.json", (request, response) =>
     {
     // EX:      /v1/directors/Landis.json
