@@ -4,17 +4,6 @@
 # Desc ..... Test script to run client cURL calls to the nodejs/express server.
 
 
-get_home_page ()
-    {
-    printf "==================\n"
-    printf "Get the home page)\n"
-    printf "==================\n"
-    printf "\n"
-    curl --request GET http://localhost:8080/v1/
-    printf "\n"
-    printf "\n"
-    }
-
 get_all_directors ()
     {
     printf "=================\n"
@@ -120,32 +109,6 @@ put_create_movie_for_director ()
     printf "\n"
     printf "/static/directors/Landis/ AFTER:\n"
     ls -l $DIRECTOR_FOLDER/Landis/*.* 2>&1
-    printf "\n"
-    }
-
-post_update_movies_for_a_director ()
-    {
-    printf "==============================\n"
-    printf "Updating movies for a director\n"
-    printf "==============================\n"
-    printf "\n"
-    printf "/static/directors/Quentin/ BEFORE:\n"
-    ls -l $DIRECTOR_FOLDER/Quentin/*.* 2>&1
-    printf "\n"
-    printf "curl: POST: /v1/directors/Quentin/movies.json\n"
-    printf "\n"
-    curl --request POST \
-         --header "Expect:" \
-         --form "moviejpg=@movies_to_upload/Quentin/Jackie_Brown_1997.jpg"   --form "moviejson=@movies_to_upload/Quentin/Jackie_Brown_1997.json" \
-         --form "moviejpg=@movies_to_upload/Quentin/Kill_Bill_V1_2003.jpg"   --form "moviejson=@movies_to_upload/Quentin/Kill_Bill_V1_2003.json" \
-         --form "moviejpg=@movies_to_upload/Quentin/Kill_Bill_V2_2004.jpg"   --form "moviejson=@movies_to_upload/Quentin/Kill_Bill_V2_2004.json" \
-         --form "moviejpg=@movies_to_upload/Quentin/Pulp_Fiction_1994.jpg"   --form "moviejson=@movies_to_upload/Quentin/Pulp_Fiction_1994.json" \
-         --form "moviejpg=@movies_to_upload/Quentin/Reservoir_Dogs_1992.jpg" --form "moviejson=@movies_to_upload/Quentin/Reservoir_Dogs_1992.json" \
-         http://localhost:8080/v1/directors/Quentin/movies.json
-    printf "\n"
-    printf "\n"
-    printf "/static/directors/Quentin/ AFTER:\n"
-    ls -l $DIRECTOR_FOLDER/Quentin/*.* 2>&1
     printf "\n"
     }
 
@@ -269,17 +232,14 @@ main ()
     printf "tester.sh.\n"
     printf "\n"
 
-    #get_home_page
+    get_all_directors                   # mongo-ready
+    get_one_director_and_their_movies   # mongo-ready
+    get_all_movies_by_a_director        # mongo-ready
+    get_one_movie_by_a_director         # mongo-ready
 
-    #get_all_directors                   # mongo-ready
-    #get_one_director_and_their_movies   # mongo-ready
-    #get_all_movies_by_a_director        # mongo-ready
-    #get_one_movie_by_a_director         # mongo-ready
+    #put_create_one_director             # mongo-ready   // Landis
+    #put_create_movie_for_director       # mongo-ready   // Landis/animal_house_1978
 
-    put_create_one_director              # mongo-ready   // Landis
-    put_create_movie_for_director        # mongo-ready   // Landis/animal_house_1978
-
-    #post_update_movies_for_a_director
     #post_change_movie_name
     #post_change_director_name_to_Peale
     #post_change_director_name_to_Peele
