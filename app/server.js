@@ -5,23 +5,18 @@
 /* TODO                                                                       */
 /******************************************************************************/
 
-// Port to retrieve data from mongodb
-//   . get the web pages (and associated APIs) working first
-//   . replace fs.readdir's with db calls
-//
-// Port add/change/delete: movies
-//
-// Port add/change/delete: directors
-//
-// Remove deprecated code
+// Add director
+// Add one movie
+// Delete director and all of their movies
+// Delete one movie
 //
 // handlers/ ?
 //
 // GUI: Add an "Admin" link to the home page, which enables:
-//   . Add Director
-//   . Add Movie to Director
-//   . Delete Movie from Director
-//   . Delete Director (which also remove their movies)
+//   . Add director
+//   . Add one movie
+//   . Delete director and all of their movies
+//   . Delete one movie
 
 /******************************************************************************/
 /* mongodb database schema                                                    */
@@ -505,6 +500,8 @@ v1.put ("/directors/:director.json", (request, response) =>
             }
         else
             {
+            // TODO: add director to mongodb
+
             rc = 200;  // success
             message = "director folder created: " + director;
             }
@@ -914,20 +911,6 @@ v1.delete ("/directors/:director/movies.json", (request, response) =>
             }
         }
     });
-
-/******************************************************************************/
-/* API ROUTES: TODO                                                           */
-/******************************************************************************/
-
-//v1.get ("/templates/:template_name", (request, response) =>
-//    {
-//    serve_static_file ("templates/" + request.params.template_name, response);
-//    });
-
-//v1.get ("/content/:filename", (request, response) =>
-//    {
-//    serve_static_file ("content/" + request.params.filename, response);
-//    });
 
 /******************************************************************************/
 /* v1 api - helpers                                                           */
