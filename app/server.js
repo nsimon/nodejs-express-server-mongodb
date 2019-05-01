@@ -5,18 +5,16 @@
 /* TODO                                                                       */
 /******************************************************************************/
 
-// Delete one movie. TODO
-// 
-// return json: { "message":message }
-//   . Add var values to all, as possible
-// 
 // GUI: Add an "Admin" link to the home page, which enables:
 //   . Add director
 //   . Add one movie
 //   . Delete director and all of their movies
 //   . Delete one movie
 //
-// handlers/ ?
+// return json: { "message":message }
+//   . Add var values to all, as possible
+//
+// handlers ?
 
 /******************************************************************************/
 /* mongodb database schema                                                    */
