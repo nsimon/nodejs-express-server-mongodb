@@ -2,7 +2,8 @@
 mongodb/
 app/movies_to_upload/
 static/directors/Landis/
-
+static/content/jquery-ui-themes-1.12.1/
+static/content/jquery-ui-1.12.1/
 
 # Logs
 logs
