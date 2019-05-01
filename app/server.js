@@ -673,52 +673,62 @@ v1.delete ("/directors/:director.json", (request, response) =>
     var directorFolder = "../static/directors/" + director;
     console.log ("directorFolder: " + directorFolder);
 
-    var rest_rc;
+    var rc;
     var message;
-    var jsonOut;
 
-    if (!fs.existsSync (directorFolder))
+    // mongodb: remove all movies by director
+    m_movies.remove ({ directors_id: director }, function (err)
         {
-        rest_rc = 500;
-        message = "ERROR: directorFolder does not exist: " + directorFolder;
-        jsonOut = { "rest_rc": rest_rc, "message": message };
-        response.status (rest_rc).send (jsonOut);
-        }
-    else
-        {
-        // get all movie files under director
-        glob (directorFolder + "/*.*", (err, files) =>
+        if (err)
             {
-            var moviefiles = [];
+            rc = 500;
+            message = "ERROR: failed to remove all movies by director from mongodb";
+            console.log (message);
+            response.status (rc).send ({ "rc": rc, "message": message });
+            }
+        else
+            {
+            console.log ("successfully removed all movies by director from mongodb");
 
-            if (err)
+            if (!fs.existsSync (directorFolder))
                 {
-                rest_rc = 500;
-                message = "unable to read moviefiles";
-                jsonOut = { "rest_rc": rest_rc, "message": message };
-                response.status (rest_rc).send (jsonOut);
+                rc = 500;
+                message = "ERROR: directorFolder does not exist: " + directorFolder;
+                console.log (message);
+                response.status (rc).send ({ "rc": rc, "message": message });
                 }
             else
                 {
-                for (var i = 0; i < files.length; i++)
+                // get all movie posters under director
+                glob (directorFolder + "/*.jpg", (err, files) =>
                     {
-                    moviefiles.push (files [i]);
+                    if (err)
+                        {
+                        rc = 500;
+                        message = "ERROR: unable to glob() movie posters";
+                        console.log (message);
+                        }
+                    else
+                        {
+                        for (var i = 0; i < files.length; i++)
+                            {
+                            fs.unlinkSync (files [i]);
+                            console.log ("successful file unlink ..... " + files [i]);
+                            }
 
-                    fs.unlinkSync (files [i]);
-                    console.log ("successful file unlink: " + files [i]);
-                    }
+                        fs.rmdirSync (directorFolder);
+                        console.log ("successful folder unlink ... " + directorFolder);
 
-                fs.rmdirSync (directorFolder);
-                console.log ("successful folder unlink: " + directorFolder);
+                        rc = 200;
+                        message = "successfully removed director and their files";
+                        console.log (message);
+                        }
 
-                // return json response
-                rest_rc = 200;
-                message = "successfully removed director and their files";
-                jsonOut = { "rc": rest_rc, "message": message, "moviefiles": moviefiles };
-                response.status (rest_rc).send (jsonOut);
+                    response.status (rc).send ({ "rc": rc, "message": message });
+                    });
                 }
-            });
-        }
+            }
+        });
     });
 
 v1.delete ("/directors/:director/movies.json", (request, response) =>

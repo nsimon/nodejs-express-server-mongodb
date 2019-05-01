@@ -163,15 +163,15 @@ main ()
     printf "tester.sh.\n"
     printf "\n"
 
-    get_all_directors                   # mongo-ready
-    get_one_director_and_their_movies   # mongo-ready
-    get_all_movies_by_a_director        # mongo-ready
-    get_one_movie_by_a_director         # mongo-ready
+    #get_all_directors                   # mongo-ready
+    #get_one_director_and_their_movies   # mongo-ready
+    #get_all_movies_by_a_director        # mongo-ready
+    #get_one_movie_by_a_director         # mongo-ready
 
     #put_create_one_director             # mongo-ready   // Landis
     #put_create_movie_for_director       # mongo-ready   // Landis/animal_house_1978
 
-    #delete_director_and_their_movies
+    delete_director_and_their_movies
     #delete_one_movie
 
     printf "====\n"
