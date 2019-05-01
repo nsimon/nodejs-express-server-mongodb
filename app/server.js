@@ -6,7 +6,10 @@
 /******************************************************************************/
 
 // Delete one movie. TODO
-//
+// 
+// return json: { "message":message }
+//   . Add var values to all, as possible
+// 
 // GUI: Add an "Admin" link to the home page, which enables:
 //   . Add director
 //   . Add one movie
@@ -667,6 +670,7 @@ v1.delete ("/directors/:director.json", (request, response) =>
     var director = request.params.director;
     console.log ("director: " + director);
 
+    // ex: ../static/directors/Landis
     var directorFolder = "../static/directors/" + director;
     console.log ("directorFolder: " + directorFolder);
 
@@ -731,70 +735,59 @@ v1.delete ("/directors/:director.json", (request, response) =>
 v1.delete ("/directors/:director/movies.json", (request, response) =>
     {
     // EX:   /v1/directors/Landis/movies.json
-    // DESC: deletes movie under Landis
+    // DESC: delete one movie under :director
 
     // ex: Landis
     var director = request.params.director;
-    console.log ("director: " + director);
+    console.log ("director ......... " + director);
+
+    // ex: animal_house_1978
+    var name = request.body.name;
+    console.log ("name ............. " + name);
 
     // ex: ../static/directors/Landis
     var directorFolder = "../static/directors/" + director;
-    console.log ("directorFolder: " + directorFolder);
+    console.log ("directorFolder ... " + directorFolder);
 
-    var moviename     = request.body.moviename;                      // ex: animal_house_1978
-    var moviejsonPath = directorFolder + "/" + moviename + ".json";  // ex: ../static/directors/Landis/animal_house_1978.json
-    var moviejpgPath  = directorFolder + "/" + moviename + ".jpg";   // ex: ../static/directors/Landis/animal_house_1978.jpg
-    console.log ("moviename:     " + moviename);
-    console.log ("moviejsonPath: " + moviejsonPath);
-    console.log ("moviejpgPath:  " + moviejpgPath);
+    var rc;
+    var message;
 
-    // {"rc":404,"message":"director folder does not exist"}
-
-    // if director does not exist (e.g. "../static/director/Landis")...
-    if (!fs.existsSync (directorFolder))
+    // mongodb: remove one movie
+    m_movies.deleteOne ( { name: name }, function (err, obj)
         {
-        var message = "director folder does not exist: " + directorFolder;
-        console.log (message);
-        response.status (404).send ({ "rc": 404, "message": message });
-        }
-
-    // if movie does not exist (e.g. "../static/director/Landis/animal_house.json")...
-    else if (!fs.existsSync (moviejsonPath))
-        {
-        var message = "moviejsonPath does not exist: " + moviejsonPath;
-        console.log (message);
-        response.status (404).send ({ "rc": 404, "message": message });
-        }
-    else
-        {
-        // delete the movie
-        fs.unlinkSync (moviejsonPath);
-
-        if (fs.existsSync (moviejsonPath))
+        if (err)
             {
-            var message = "unable to delete moviejsonPath: " + moviejsonPath;
+            rc = 500;
+            message = "ERROR: failed to remove one movie by director from mongodb: " + name;
             console.log (message);
-            response.status (404).send ({ "rc": 404, "message": message });
+            response.status (rc).send ({ "rc": rc, "message": message });
             }
         else
             {
-            fs.unlinkSync (moviejpgPath);
+            console.log ("successfully removed one movie by director from mongodb: " + name);
 
-            if (fs.existsSync (moviejpgPath))
+            var posterJpg = (directorFolder + "/" + name + ".jpg");
+            console.log ("posterJpg ........ " + posterJpg);
+
+            if (!fs.existsSync (posterJpg))
                 {
-                var message = "unable to delete moviejpgPath: " + moviejpgPath;
+                rc = 500;
+                message = "ERROR: cannot remove posterJpg: file does not exist: " + posterJpg;
                 console.log (message);
-                response.status (404).send ({ "rc": 404, "message": message });
+                response.status (rc).send ({ "rc": rc, "message": message });
                 }
             else
                 {
-                //var rc = 204;   // should use 204 (DELETE successful), but that doesn't return json message
-                var message = "successfully deleted movie: " + moviename;
+                // remove posterJpg
+                fs.unlinkSync (posterJpg);
+
+                rc = 200;
+                message = "successfully removed: " + name + " (from mongodb), and its poster: " + posterJpg + " (from director folder)";
                 console.log (message);
-                response.status (200).send ({ "rc": 200, "message": message });
+                response.status (rc).send ({ "rc": rc, "message": message });
                 }
             }
-        }
+        });
     });
 
 /******************************************************************************/

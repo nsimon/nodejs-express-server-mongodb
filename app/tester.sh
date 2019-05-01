@@ -102,7 +102,7 @@ put_create_movie_for_director ()
     # (2) Upload the poster
     curl --request PUT \
          --header "Expect:" \
-         --form "moviejpg=@movies_to_upload/Landis/animal_house_1978.jpg" \
+         --form "moviejpg=@movies_to_upload/Landis/Animal_House_1978.jpg" \
          http://localhost:8080/v1/directors/Landis/movies.json
     printf "\n"
 
@@ -143,7 +143,7 @@ delete_one_movie ()
     printf "\n"
     printf "curl: DELETE: /v1/directors/Landis/movies.json\n"
     printf "\n"
-    JSON_OUT="{ \"moviename\": \"animal_house_1978\" }"
+    JSON_OUT="{ \"name\": \"Animal_House_1978\" }"
     curl --request DELETE \
          --header 'Content-Type: application/json' \
          --data "$JSON_OUT" \
@@ -169,10 +169,10 @@ main ()
     #get_one_movie_by_a_director         # mongo-ready
 
     #put_create_one_director             # mongo-ready   // Landis
-    #put_create_movie_for_director       # mongo-ready   // Landis/animal_house_1978
+    #put_create_movie_for_director       # mongo-ready   // Landis/Animal_House_1978
 
-    delete_director_and_their_movies
-    #delete_one_movie
+    #delete_director_and_their_movies
+    delete_one_movie
 
     printf "====\n"
     printf "Done\n"
