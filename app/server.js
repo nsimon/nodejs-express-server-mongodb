@@ -7,9 +7,9 @@
 
 // GUI: Add an "Admin" link to the home page, which enables:
 //   . Add director
-//   . Add one movie
-//   . Delete director and all of their movies
-//   . Delete one movie
+//   . Add movie
+//   . Delete director (and all of their movies)
+//   . Delete move
 //
 // return json: { "message":message }
 //   . Add var values to all, as possible
