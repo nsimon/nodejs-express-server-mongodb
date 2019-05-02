@@ -25,9 +25,6 @@ $(function ()
             var renderedPage = Mustache.to_html (tmpl, tdata);
 
             $("body").html (renderedPage);
-
-            // Render the jquery admin-menu
-            $("#admin-menu").menu ();
             });
         }();
     });

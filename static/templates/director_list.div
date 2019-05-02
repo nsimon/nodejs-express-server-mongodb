@@ -10,7 +10,7 @@
   </ul>
 </div>
 
-<ul id = "admin-menu">
+<ul>
   <li><a href = "#">Add Director</a></li>
   <li><a href = "#">Add Movie</a></li>
   <li><a href = "#">Delete Director</a></li>
