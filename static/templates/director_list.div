@@ -10,16 +10,12 @@
   </ul>
 </div>
 
-<ul>
-  <li><a href = "#">Add Director</a></li>
-  <li><a href = "#">Add Movie</a></li>
-  <li><a href = "#">Delete Director</a></li>
-  <li><a href = "#">Delete Movie</a></li>
-  <li><a href = "#">Swingout-Menu</a>
-    <ul>
-      <li><a href = "#">Item 1</a></li>
-      <li><a href = "#">Item 2</a></li>
-      <li><a href = "#">Item 3</a></li>
-    </ul>
-  </li>
-</ul>
+<div id="admin">
+  <span id="admin_header">Admin</span></ br>
+  <ul>
+    <li><a href = "#">Add Director</a></li>
+    <li><a href = "#">Add Movie</a></li>
+    <li><a href = "#">Delete Director</a></li>
+    <li><a href = "#">Delete Movie</a></li>
+  </ul>
+</div>
