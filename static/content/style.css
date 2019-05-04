@@ -62,3 +62,16 @@ body
   padding-bottom: 20px;
   }
 
+.admin_button
+  {
+  background-color: #D3D3D3;  /* light gray */
+  color: black;
+  padding: 4px 8px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  margin: 4px 2px;
+  cursor: pointer;
+  font-size: 12px;
+  }
+
