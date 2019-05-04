@@ -62,7 +62,12 @@ body
   padding-bottom: 20px;
   }
 
-.admin_button
+#admin-button,
+#admin-add-director-button,
+#admin-delete-director-button,
+#admin-add-movie-button,
+#admin-delete-movie-button,
+#home-button
   {
   background-color: #D3D3D3;  /* light gray */
   color: black;

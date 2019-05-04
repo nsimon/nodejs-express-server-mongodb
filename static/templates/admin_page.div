@@ -1,35 +1,35 @@
 <div id="admin_page">
 
-  <a href="http://localhost:8080/pages/home" class="admin_button">Home</a>
+  <a href="http://localhost:8080/pages/home" id="home-button">Home</a>
 
   <h2>Admin</h2>
 
   <table class="admin-table">
       <tr>
         <td>Add Director</td>
-        <td><input type="text" name="FirstName" value=""></td>
-        <td class="admin_button">Add</td>
+        <td><input type="text" id="admin-add-director-director" name="FirstName" value=""></td>
+        <td id="admin-add-director-button">Add</td>
       </tr>
       <tr>
         <td>Delete Director</td>
-        <td><select><option value="Choose Director">Choose Director</option></select></td>
-        <td class="admin_button">Delete</td>
+        <td><select id="admin-delete-director-director"><option value="Choose Director">Choose Director</option></select></td>
+        <td id="admin-delete-director-button">Delete</td>
       </tr>
       <tr>
         <td>Add Movie</td>
         <td>
-          <select><option value="Choose Director">Choose Director</option></select><br />
-          <select><option value="Choose Movie">Choose Movie</option></select>
+          <select id="admin-add-movie-director"><option value="Choose Director">Choose Director</option></select><br />
+          <select id="admin-add-movie-movie"><option value="Choose Movie">Choose Movie</option></select>
         </td>
-        <td class="admin_button">Add</td>
+        <td id="admin-add-movie-button">Add</td>
       </tr>
       <tr>
         <td>Delete Movie</td>
         <td>
-          <select><option value="Choose Director">Choose Director</option></select><br />
-          <select><option value="Choose Movie">Choose Movie</option></select>
+          <select id="admin-delete-movie-director"><option value="Choose Director">Choose Director</option></select><br />
+          <select id="admin-delete-movie-movie><option value="Choose Movie">Choose Movie</option></select>
         </td>
-        <td class="admin_button">Delete</td>
+        <td id="admin-delete-movie-button">Delete</td>
       </tr>
     </table>
 

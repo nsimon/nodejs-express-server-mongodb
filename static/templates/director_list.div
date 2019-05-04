@@ -1,4 +1,4 @@
-<a href="http://localhost:8080/pages/admin" class="admin_button">Admin</a>
+<a href="http://localhost:8080/pages/admin" id="admin-button">Admin</a>
 
 <div id="director_list">
   <p>There are {{ directors.length }} directors</p>
