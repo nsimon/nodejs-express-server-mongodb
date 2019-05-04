@@ -12,13 +12,13 @@
       </tr>
       <tr>
         <td>Delete Director</td>
-        <td><select id="admin-delete-director-director"><option disabled selected value="Choose Director">Choose Director</option></select></td>
+        <td><select id="admin-delete-director-director"></select></td>
         <td id="admin-delete-director-button">Delete</td>
       </tr>
       <tr>
         <td>Add Movie</td>
         <td>
-          <select id="admin-add-movie-director"><option value="Choose Director">Choose Director</option></select><br />
+          <select id="admin-add-movie-director"></select><br />
           <select id="admin-add-movie-movie"><option value="Choose Movie">Choose Movie</option></select>
         </td>
         <td id="admin-add-movie-button">Add</td>
@@ -26,7 +26,7 @@
       <tr>
         <td>Delete Movie</td>
         <td>
-          <select id="admin-delete-movie-director"><option value="Choose Director">Choose Director</option></select><br />
+          <select id="admin-delete-movie-director"></select><br />
           <select id="admin-delete-movie-movie"><option value="Choose Movie">Choose Movie</option></select>
         </td>
         <td id="admin-delete-movie-button">Delete</td>
