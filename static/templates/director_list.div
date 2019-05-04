@@ -1,3 +1,5 @@
+<a href="http://localhost:8080/pages/admin" class="admin_button">Admin</a>
+
 <div id="director_list">
   <p>There are {{ directors.length }} directors</p>
   <ul id="directors">
@@ -10,12 +12,3 @@
   </ul>
 </div>
 
-<div id="admin">
-  <span id="admin_header">Admin</span></ br>
-  <ul>
-    <li><a href = "#">Add Director</a></li>
-    <li><a href = "#">Add Movie</a></li>
-    <li><a href = "#">Delete Director</a></li>
-    <li><a href = "#">Delete Movie</a></li>
-  </ul>
-</div>
