@@ -2,8 +2,7 @@
 
 $(function ()
     {
-    var tmpl;    // Main template HTML
-    tdata = {};  // JSON data object that feeds the template
+    var tmpl;  // Receives the contents of "/templates/admin_page.div"
 
     // Initialize page
     var initPage = function ()
