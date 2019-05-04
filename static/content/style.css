@@ -75,3 +75,13 @@ body
   font-size: 12px;
   }
 
+#admin_page h2
+  {
+  padding-bottom: 25px;
+  }
+
+td
+  {
+  padding-bottom: 40px;
+  padding-right: 25px;
+  }

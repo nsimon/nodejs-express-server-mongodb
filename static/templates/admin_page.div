@@ -1,10 +1,37 @@
 <div id="admin_page">
-  <p>Admin</p>
-  <ul>
-    <li><a href = "#">Add Director</a></li>
-    <li><a href = "#">Add Movie</a></li>
-    <li><a href = "#">Delete Director</a></li>
-    <li><a href = "#">Delete Movie</a></li>
-  </ul>
+
+  <a href="http://localhost:8080/pages/home" class="admin_button">Home</a>
+
+  <h2>Admin</h2>
+
+  <table class="admin-table">
+      <tr>
+        <td>Add Director</td>
+        <td><input type="text" name="FirstName" value=""></td>
+        <td class="admin_button">Add</td>
+      </tr>
+      <tr>
+        <td>Delete Director</td>
+        <td><select><option value="Choose Director">Choose Director</option></select></td>
+        <td class="admin_button">Delete</td>
+      </tr>
+      <tr>
+        <td>Add Movie</td>
+        <td>
+          <select><option value="Choose Director">Choose Director</option></select><br />
+          <select><option value="Choose Movie">Choose Movie</option></select>
+        </td>
+        <td class="admin_button">Add</td>
+      </tr>
+      <tr>
+        <td>Delete Movie</td>
+        <td>
+          <select><option value="Choose Director">Choose Director</option></select><br />
+          <select><option value="Choose Movie">Choose Movie</option></select>
+        </td>
+        <td class="admin_button">Delete</td>
+      </tr>
+    </table>
+
 </div>
 
