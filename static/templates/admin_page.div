@@ -1,0 +1,10 @@
+<div id="admin_page">
+  <p>Admin</p>
+  <ul>
+    <li><a href = "#">Add Director</a></li>
+    <li><a href = "#">Add Movie</a></li>
+    <li><a href = "#">Delete Director</a></li>
+    <li><a href = "#">Delete Movie</a></li>
+  </ul>
+</div>
+
