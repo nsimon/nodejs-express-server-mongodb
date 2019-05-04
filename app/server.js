@@ -454,7 +454,7 @@ v1.get ("*", (request, response) =>
     // This is the 404 case
     //   . The inbound GET did not match any of the above get() routes
     var rc = 404;
-    var message = "page not found";
+    var message = "page not found: " + request.url;
     console.log (message);
     response.status (rc).send ({ "rc": rc, "message": message });
     });
