@@ -3,15 +3,6 @@
 // How to extract a selected value from a dropdown:
 //   var employeeFirstCommaLast = $("#supervisorStaffDropdown").find("option:selected").text ();  // ex: Simon, Neil
 
-// How to hook a "changed" select:
-//   function hookSupervisorStaffDropdown ()
-//       {
-//       // HOOK: #supervisorStaffDropdown
-//       $("#supervisorStaffDropdown").change (function ()
-//           {
-//           }
-//       }
-
 $(function ()
     {
     // 1. GET /templates/admin_page.div, insert into <body>
@@ -87,11 +78,18 @@ $(function ()
             }
         });
 
-    // 3. Create triggers:
+    // 3. When AJAX calls are complete, create triggers:
     //    . add-movie-director-dropdown, delete-movie-director-dropdown
     //      - to populate associated movie dropdown
     //    . all buttons
     //      - to issue API calls
     //    . NOTE: initially, test each trigger with alert()
+    $(document).ajaxStop (function ()
+        {
+        $("#admin-add-director-button").click (function ()
+            {
+            alert ("#admin-add-director-button");
+            });
+        });
     });
 

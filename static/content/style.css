@@ -63,10 +63,6 @@ body
   }
 
 #admin-button,
-#admin-add-director-button,
-#admin-delete-director-button,
-#admin-add-movie-button,
-#admin-delete-movie-button,
 #home-button
   {
   background-color: #D3D3D3;  /* light gray */
@@ -78,6 +74,25 @@ body
   margin: 4px 2px;
   cursor: pointer;
   font-size: 12px;
+  font-weight: bold;
+  }
+
+#admin-add-director-button,
+#admin-delete-director-button,
+#admin-add-movie-button,
+#admin-delete-movie-button
+  {
+  background-color: #D3D3D3;  /* light gray */
+  color: black;
+  padding: 4px 8px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  width: 100%;
+  margin: 4px 2px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: bold;
   }
 
 #admin_page h2

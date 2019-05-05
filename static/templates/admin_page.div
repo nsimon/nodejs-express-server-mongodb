@@ -1,6 +1,6 @@
 <div id="admin_page">
 
-  <a href="http://localhost:8080/pages/home" id="home-button">Home</a>
+  <a href="http://localhost:8080/pages/home"><button id="home-button">Home</button></a>
 
   <h2>Admin</h2>
 
@@ -8,12 +8,12 @@
       <tr>
         <td>Add Director</td>
         <td><input type="text" id="admin-add-director-director" name="FirstName" value=""></td>
-        <td id="admin-add-director-button">Add</td>
+        <td><button id="admin-add-director-button">Add</button></td>
       </tr>
       <tr>
         <td>Delete Director</td>
         <td><select id="admin-delete-director-director"></select></td>
-        <td id="admin-delete-director-button">Delete</td>
+        <td><button id="admin-delete-director-button">Delete</button></td>
       </tr>
       <tr>
         <td>Add Movie</td>
@@ -21,7 +21,7 @@
           <select id="admin-add-movie-director"></select><br />
           <select id="admin-add-movie-movie"><option value="Choose Movie">Choose Movie</option></select>
         </td>
-        <td id="admin-add-movie-button">Add</td>
+        <td><button id="admin-add-movie-button">Add</button></td>
       </tr>
       <tr>
         <td>Delete Movie</td>
@@ -29,7 +29,7 @@
           <select id="admin-delete-movie-director"></select><br />
           <select id="admin-delete-movie-movie"><option value="Choose Movie">Choose Movie</option></select>
         </td>
-        <td id="admin-delete-movie-button">Delete</td>
+        <td><button id="admin-delete-movie-button">Delete</button></td>
       </tr>
     </table>
 
