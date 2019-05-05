@@ -6,7 +6,7 @@ $(function ()
     $.ajax (
         {
         url:   "/templates/admin_page.div",  // html to be inserted into "body"
-        async: false,                        // Block until ajax call returns
+        async: false,
         type:  "GET",
         error: function (xhr, status, error)
             {
@@ -27,7 +27,7 @@ $(function ()
     $.ajax (
         {
         url:   "/v1/directors.json",
-        async: false,                        // Block until ajax call returns
+        async: false,
         type:  "GET",
         error: function (xhr, status, error)
             {
@@ -113,10 +113,61 @@ function hookAddMovieDirectorDropdown ()
         // Extract new director_name from the text box
         var director_name = $("#admin-add-movie-director").find("option:selected").text ();
 
-        alert ("director_name: " + director_name);
+        // alert ("director_name: " + director_name);
 
-        // Make ajax call to populate movie names list
-        // blah ()
+        var url = "/v1/directors/" + director_name + "/movies.json";
+
+        // GET /v1/directors/{director_name}/movies.json, insert into associated movie dropdown
+        $.ajax (
+            {
+            url:   url,
+            async: false,
+            type:  "GET",
+            error: function (xhr, status, error)
+                {
+                alert ("ajax() error on: GET " + url + "\n" +
+                       "status: " + status + "\n" +
+                       "error: "  + error);
+                },
+            success: function (data)
+                {
+                // alert ("ajax() success: data: " + JSON.stringify (data));
+
+                // (ex) data =
+                // { "rc": 0, "message": "movies found: 2",
+                //   "data": { "movies": [ { "moviejson": "Get_Out_2017.json", "moviename": "Get_Out_2017" },
+                //                         { "moviejson": "Us_2019.json",      "moviename": "Us_2019" }]}}
+
+                var rc         = data.rc;
+                var message    = data.message;
+                var movies     = data.data.movies;
+                var options    = "";
+                var movie_name = "";
+
+                // alert ("rc: "      + rc      + "\n" +
+                //        "message: " + message + "\n" +
+                //        "movies: "  + movies);
+
+                // Hardcode 1st dropdown option
+                options += "<option disabled selected>Choose movie...</option>";
+
+                // Get each movie name
+                for (var i = 0; i < movies.length; i++)
+                    {
+                    // ex: Get_Out_2017
+                    movie_name = movies [i].moviename;
+
+                    // ex: <option>Get_Out_2017</option>
+                    options += "<option value='" + movie_name + "'>" + movie_name + "</option>";
+                    }
+
+                // alert ("options: " + options);
+
+                // Insert "options" (i.e. movie names) into associated movie dropdown
+                $("#admin-add-movie-movie").empty ();          // clear
+                $("#admin-add-movie-movie").append (options);  // append options
+                }
+            });
         });
     }
 
@@ -127,10 +178,61 @@ function hookDeleteMovieDirectorDropdown ()
         // Extract new director_name from the text box
         var director_name = $("#admin-delete-movie-director").find("option:selected").text ();
 
-        alert ("director_name: " + director_name);
+        // alert ("director_name: " + director_name);
 
-        // Make ajax call to populate movie names list
-        // blah ()
+        var url = "/v1/directors/" + director_name + "/movies.json";
+
+        // GET /v1/directors/{director_name}/movies.json, insert into associated movie dropdown
+        $.ajax (
+            {
+            url:   url,
+            async: false,
+            type:  "GET",
+            error: function (xhr, status, error)
+                {
+                alert ("ajax() error on: GET " + url + "\n" +
+                       "status: " + status + "\n" +
+                       "error: "  + error);
+                },
+            success: function (data)
+                {
+                // alert ("ajax() success: data: " + JSON.stringify (data));
+
+                // (ex) data =
+                // { "rc": 0, "message": "movies found: 2",
+                //   "data": { "movies": [ { "moviejson": "Get_Out_2017.json", "moviename": "Get_Out_2017" },
+                //                         { "moviejson": "Us_2019.json",      "moviename": "Us_2019" }]}}
+
+                var rc         = data.rc;
+                var message    = data.message;
+                var movies     = data.data.movies;
+                var options    = "";
+                var movie_name = "";
+
+                // alert ("rc: "      + rc      + "\n" +
+                //        "message: " + message + "\n" +
+                //        "movies: "  + movies);
+
+                // Hardcode 1st dropdown option
+                options += "<option disabled selected>Choose movie...</option>";
+
+                // Get each movie name
+                for (var i = 0; i < movies.length; i++)
+                    {
+                    // ex: Get_Out_2017
+                    movie_name = movies [i].moviename;
+
+                    // ex: <option>Get_Out_2017</option>
+                    options += "<option value='" + movie_name + "'>" + movie_name + "</option>";
+                    }
+
+                // alert ("options: " + options);
+
+                // Insert "options" (i.e. movie names) into associated movie dropdown
+                $("#admin-delete-movie-movie").empty ();          // clear
+                $("#admin-delete-movie-movie").append (options);  // append options
+                }
+            });
         });
     }
 
