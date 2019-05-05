@@ -105,3 +105,14 @@ td
   padding-bottom: 40px;
   padding-right: 25px;
   }
+
+
+input[type="text"]
+  {
+  width: 171px;
+  }
+
+select
+  {
+  width: 175px;
+  }
