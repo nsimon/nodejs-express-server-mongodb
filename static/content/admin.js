@@ -79,11 +79,10 @@ $(function ()
             }
         });
 
-    // 3. Create triggers:
-    //    . add-movie-director-dropdown, delete-movie-director-dropdown
-    //      - to populate associated movie dropdown
-    //    . all buttons
-    //      - to issue API calls
+    // 3. Create button triggers
+    //    . add-movie-director-dropdown
+    //    . delete-movie-director-dropdown
+    //      - populate associated movie dropdown
     $("#admin-add-director-button").click (function ()
         {
         adminAddDirector ();
@@ -110,14 +109,19 @@ function adminAddDirector ()
     // Extract new director_name from the text box
     var director_name = $("#admin-add-director-director").val ();
 
-    alert ("adminAddDirector(): director_name: " + director_name);
+    if (director_name == "")
+        {
+        alert ("ERROR: please enter a director first");
+        }
+    else
+        {
+        alert ("director_name: " + director_name);
+        }
     }
 
 function adminDeleteDirector ()
     {
     var director_name = $("#admin-delete-director-director").find("option:selected").text ();
-
-    alert ("adminDeleteDirector(): director_name: " + director_name);
 
     if (director_name == "Choose director...")
         {
@@ -125,6 +129,7 @@ function adminDeleteDirector ()
         }
     else
         {
+        alert ("director_name: " + director_name);
         }
     }
 
@@ -132,14 +137,23 @@ function adminAddMovie ()
     {
     var director_name = $("#admin-add-movie-director").find("option:selected").text ();
 
-    alert ("adminAddMovie(): director_name: " + director_name);
-
     if (director_name == "Choose director...")
         {
         alert ("ERROR: please choose a director first");
         }
     else
         {
+        var movie_name = $("#admin-add-movie-movie").find("option:selected").text ();
+
+        if (movie_name == "Choose movie...")
+            {
+            alert ("ERROR: please choose a movie first");
+            }
+        else
+            {
+            alert ("director_name: " + director_name + "\n" +
+                   "movie_name: "    + movie_name);
+            }
         }
     }
 
@@ -147,14 +161,23 @@ function adminDeleteMovie ()
     {
     var director_name = $("#admin-delete-movie-director").find("option:selected").text ();
 
-    alert ("adminDeleteMovie(): director_name: " + director_name);
-
     if (director_name == "Choose director...")
         {
         alert ("ERROR: please choose a director first");
         }
     else
         {
+        var movie_name = $("#admin-delete-movie-movie").find("option:selected").text ();
+
+        if (movie_name == "Choose movie...")
+            {
+            alert ("ERROR: please choose a movie first");
+            }
+        else
+            {
+            alert ("director_name: " + director_name + "\n" +
+                   "movie_name: "    + movie_name);
+            }
         }
     }
 
