@@ -10,13 +10,13 @@ $(function ()
         type:  "GET",
         error: function (xhr, status, error)
             {
-            alert ("ajax() error on: GET /templates/admin_page.div" + "\n" +
+            alert ("ajax() error on GET /templates/admin_page.div" + "\n" +
                    "status: " + status + "\n" +
                    "error: "  + error);
             },
         success: function (admin_page_div)
             {
-            // alert ("ajax() success: inserting admin_page.div into <body>");
+            // alert ("ajax() success on GET /templates/admin_page.div");
 
             // insert the admin_page.div
             $("body").html (admin_page_div);
@@ -31,13 +31,15 @@ $(function ()
         type:  "GET",
         error: function (xhr, status, error)
             {
-            alert ("ajax() error on: GET /v1/directors.json" + "\n" +
+            alert ("ajax() error on GET /v1/directors.json" + "\n" +
                    "status: " + status + "\n" +
                    "error: "  + error);
             },
         success: function (data)
             {
-            // alert ("ajax() success: data: " + JSON.stringify (data));
+            // alert ("ajax() success on GET /v1/directors/json" + "\n" +
+            //        "data: " + JSON.stringify (data));
+
             // (ex) data = { "rc": rc, "message": message, "data": { "directors": director_list }};
 
             var rc            = data.rc;
@@ -108,13 +110,14 @@ function hookDeleteMovieDirectorDropdown ()
             type:  "GET",
             error: function (xhr, status, error)
                 {
-                alert ("ajax() error on: GET " + url + "\n" +
+                alert ("ajax() error on GET " + url + "\n" +
                        "status: " + status + "\n" +
                        "error: "  + error);
                 },
             success: function (data)
                 {
-                // alert ("ajax() success: data: " + JSON.stringify (data));
+                // alert ("ajax() success on GET " + url + "\n" +
+                //        "data: " + JSON.stringify (data));
 
                 // (ex) data =
                 // { "rc": 0, "message": "movies found: 2",
@@ -154,6 +157,10 @@ function hookDeleteMovieDirectorDropdown ()
         });
     }
 
+/******************************************************************************/
+/* button actions                                                             */
+/******************************************************************************/
+
 function adminAddDirector ()
     {
     // Extract new director_name from the text box
@@ -166,11 +173,41 @@ function adminAddDirector ()
     else
         {
         alert ("director_name: " + director_name);
+
+        var jsonOut = { "_id" : director_name, "name" : director_name, "description" : "" };
+
+        // ex: /v1/directors/Landis.json
+        var url = "/v1/directors/" + director_name + ".json";
+
+        $.ajax (
+            {
+            url:   url,
+            async: false,
+            type:  "PUT",
+            data:
+                {
+                "jsonOut": jsonOut
+                },
+            dataType: "json",
+            error: function (xhr, status, error)
+                {
+                alert ("ajax() error on PUT " + url + "\n" +
+                       "status: " + status + "\n" +
+                       "error: "  + error);
+                },
+            success: function (data)
+                {
+                alert ("ajax() success on PUT " + url + "\n" +
+                       "data: " + JSON.stringify (data));
+                }
+            });
         }
     }
 
 function adminDeleteDirector ()
     {
+    // CODE COMPLETE, WORKING
+
     var director_name = $("#admin-delete-director-director").find("option:selected").text ();
 
     if (director_name == "Choose director...")
@@ -179,7 +216,43 @@ function adminDeleteDirector ()
         }
     else
         {
-        alert ("director_name: " + director_name);
+        // alert ("director_name: " + director_name);
+
+        // JSON_OUT="{ \"directorName\": \"Landis\" }"
+        // curl --request DELETE \
+        //      --header 'Content-Type: application/json' \
+        //      --data "$JSON_OUT" \
+        //      http://localhost:8080/v1/directors/Landis.json
+
+        var jsonOut = { "directorName" : director_name };
+
+        // ex: /v1/directors/Landis.json
+        var url = "/v1/directors/" + director_name + ".json";
+
+        $.ajax (
+            {
+            url:   url,
+            async: false,
+            type:  "DELETE",
+            data:
+                {
+                "jsonOut": jsonOut
+                },
+            dataType: "json",
+            error: function (xhr, status, error)
+                {
+                alert ("ajax() error on DELETE " + url + "\n" +
+                       "status: " + status + "\n" +
+                       "error: "  + error);
+                },
+            success: function (data)
+                {
+                alert ("ajax() success on DELETE " + url + "\n" +
+                       "data: " + JSON.stringify (data));
+                }
+            });
+
+
         }
     }
 
