@@ -661,7 +661,7 @@ v1.delete ("/directors/:director.json", (request, response) =>
     var message;
 
     // mongodb: remove all movies by director
-    m_movies.remove ({ directors_id: director }, function (err)
+    m_movies.remove ({ directors_id: director }, function (err, obj)
         {
         if (err)
             {
@@ -674,43 +674,59 @@ v1.delete ("/directors/:director.json", (request, response) =>
             {
             console.log ("successfully removed all movies by director from mongodb");
 
-            if (!fs.existsSync (directorFolder))
+            // mongodb: remove {director} from directors
+            m_directors.remove ({ "_id" : director }, function (err, obj)
                 {
-                rc = 500;
-                message = "ERROR: directorFolder does not exist: " + directorFolder;
-                console.log (message);
-                response.status (rc).send ({ "rc": rc, "message": message });
-                }
-            else
-                {
-                // get all movie posters under director
-                glob (directorFolder + "/*.jpg", (err, files) =>
+                if (err)
                     {
-                    if (err)
+                    rc = 500;
+                    message = "ERROR: failed to remove director from mongodb";
+                    console.log (message);
+                    response.status (rc).send ({ "rc": rc, "message": message });
+                    }
+                else
+                    {
+                    console.log ("successfully removed director from mongodb");
+
+                    if (!fs.existsSync (directorFolder))
                         {
-                        rc = 500;
-                        message = "ERROR: unable to glob() movie posters";
+                        rc = 200;
+                        message = "WARN: directorFolder does not exist: " + directorFolder;
                         console.log (message);
+                        response.status (rc).send ({ "rc": rc, "message": message });
                         }
                     else
                         {
-                        for (var i = 0; i < files.length; i++)
+                        // get all movie posters under director
+                        glob (directorFolder + "/*.jpg", (err, files) =>
                             {
-                            fs.unlinkSync (files [i]);
-                            console.log ("successful file unlink ..... " + files [i]);
-                            }
-
-                        fs.rmdirSync (directorFolder);
-                        console.log ("successful folder unlink ... " + directorFolder);
-
-                        rc = 200;
-                        message = "successfully removed director and their files";
-                        console.log (message);
+                            if (err)
+                                {
+                                rc = 500;
+                                message = "ERROR: unable to glob() movie posters";
+                                console.log (message);
+                                }
+                            else
+                                {
+                                for (var i = 0; i < files.length; i++)
+                                    {
+                                    fs.unlinkSync (files [i]);
+                                    console.log ("successful file unlink ..... " + files [i]);
+                                    }
+        
+                                fs.rmdirSync (directorFolder);
+                                console.log ("successful folder unlink ... " + directorFolder);
+        
+                                rc = 200;
+                                message = "successfully removed director and their files";
+                                console.log (message);
+                                }
+        
+                            response.status (rc).send ({ "rc": rc, "message": message });
+                            });
                         }
-
-                    response.status (rc).send ({ "rc": rc, "message": message });
-                    });
-                }
+                    }
+                });
             }
         });
     });
