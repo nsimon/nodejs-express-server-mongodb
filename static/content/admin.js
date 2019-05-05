@@ -107,7 +107,10 @@ $(function ()
 
 function adminAddDirector ()
     {
-    alert ("adminAddDirector()");
+    // Extract new director_name from the text box
+    var director_name = $("#admin-add-director-director").val ();
+
+    alert ("adminAddDirector(): director_name: " + director_name);
     }
 
 function adminDeleteDirector ()
