@@ -80,9 +80,6 @@ $(function ()
         });
 
     // 3. Create button triggers
-    //    . add-movie-director-dropdown
-    //    . delete-movie-director-dropdown
-    //      - populate associated movie dropdown
     $("#admin-add-director-button").click (function ()
         {
         adminAddDirector ();
@@ -102,7 +99,40 @@ $(function ()
         {
         adminDeleteMovie ();
         });
+
+    // 4. Create director dropdown 'change' triggers
+    //    (to populate associated movie dropdown)
+    hookAddMovieDirectorDropdown ();
+    hookDeleteMovieDirectorDropdown ();
     });
+
+function hookAddMovieDirectorDropdown ()
+    {
+    $("#admin-add-movie-director").change (function ()
+        {
+        // Extract new director_name from the text box
+        var director_name = $("#admin-add-movie-director").find("option:selected").text ();
+
+        alert ("director_name: " + director_name);
+
+        // Make ajax call to populate movie names list
+        // blah ()
+        });
+    }
+
+function hookDeleteMovieDirectorDropdown ()
+    {
+    $("#admin-delete-movie-director").change (function ()
+        {
+        // Extract new director_name from the text box
+        var director_name = $("#admin-delete-movie-director").find("option:selected").text ();
+
+        alert ("director_name: " + director_name);
+
+        // Make ajax call to populate movie names list
+        // blah ()
+        });
+    }
 
 function adminAddDirector ()
     {
