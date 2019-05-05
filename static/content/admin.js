@@ -87,22 +87,42 @@ $(function ()
     //      - to issue API calls
     $("#admin-add-director-button").click (function ()
         {
-        alert ("#admin-add-director-button");
+        adminAddDirector ();
         });
 
     $("#admin-delete-director-button").click (function ()
         {
-        alert ("#admin-delete-director-button");
+        adminDeleteDirector ();
         });
 
     $("#admin-add-movie-button").click (function ()
         {
-        alert ("#admin-add-movie-button");
+        adminAddMovie ();
         });
 
     $("#admin-delete-movie-button").click (function ()
         {
-        alert ("#admin-delete-movie-button");
+        adminDeleteMovie ();
         });
     });
+
+function adminAddDirector ()
+    {
+    alert ("adminAddDirector()");
+    }
+
+function adminDeleteDirector ()
+    {
+    alert ("adminDeleteDirector()");
+    }
+
+function adminAddMovie ()
+    {
+    alert ("adminAddMovie()");
+    }
+
+function adminDeleteMovie ()
+    {
+    alert ("adminDeleteMovie()");
+    }
 
