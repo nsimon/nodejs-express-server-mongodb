@@ -1,8 +1,5 @@
 // admin.js
 
-// How to extract a selected value from a dropdown:
-//   var employeeFirstCommaLast = $("#supervisorStaffDropdown").find("option:selected").text ();  // ex: Simon, Neil
-
 $(function ()
     {
     // 1. GET /templates/admin_page.div, insert into <body>
@@ -73,8 +70,10 @@ $(function ()
             // Insert "options" (i.e. director names) into director dropdowns
             $("#admin-delete-director-director").empty ();          // clear
             $("#admin-delete-director-director").append (options);  // append options
+
             $("#admin-add-movie-director").empty ();
             $("#admin-add-movie-director").append (options);
+
             $("#admin-delete-movie-director").empty ();
             $("#admin-delete-movie-director").append (options);
             }
@@ -113,16 +112,46 @@ function adminAddDirector ()
 
 function adminDeleteDirector ()
     {
-    alert ("adminDeleteDirector()");
+    var director_name = $("#admin-delete-director-director").find("option:selected").text ();
+
+    alert ("adminDeleteDirector(): director_name: " + director_name);
+
+    if (director_name == "Choose director...")
+        {
+        alert ("ERROR: please choose a director first");
+        }
+    else
+        {
+        }
     }
 
 function adminAddMovie ()
     {
-    alert ("adminAddMovie()");
+    var director_name = $("#admin-add-movie-director").find("option:selected").text ();
+
+    alert ("adminAddMovie(): director_name: " + director_name);
+
+    if (director_name == "Choose director...")
+        {
+        alert ("ERROR: please choose a director first");
+        }
+    else
+        {
+        }
     }
 
 function adminDeleteMovie ()
     {
-    alert ("adminDeleteMovie()");
+    var director_name = $("#admin-delete-movie-director").find("option:selected").text ();
+
+    alert ("adminDeleteMovie(): director_name: " + director_name);
+
+    if (director_name == "Choose director...")
+        {
+        alert ("ERROR: please choose a director first");
+        }
+    else
+        {
+        }
     }
 
