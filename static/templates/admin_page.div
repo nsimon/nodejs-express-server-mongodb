@@ -19,7 +19,7 @@
         <td>Add Movie</td>
         <td>
           <select id="admin-add-movie-director"></select><br />
-          <select id="admin-add-movie-movie"><option disabled selected>Choose movie...</option></select>
+          <input type="text" id="admin-add-movie-movie" />
         </td>
         <td><button id="admin-add-movie-button">Add</button></td>
       </tr>
