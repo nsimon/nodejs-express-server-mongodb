@@ -23,7 +23,22 @@ $(function ()
             }
         });
 
+
     // 2. GET /v1/directors.json, insert into 3 "director" dropdowns
+    populateDirectorDropdowns ();
+
+    // 3. Create button triggers
+    $("#admin-add-director-button").click (function ()    { adminAddDirector ();    });
+    $("#admin-delete-director-button").click (function () { adminDeleteDirector (); });
+    $("#admin-add-movie-button").click (function ()       { adminAddMovie ();       });
+    $("#admin-delete-movie-button").click (function ()    { adminDeleteMovie ();    });
+
+    // 4. Create director dropdown 'change' trigger to populate associated movie dropdown
+    hookDeleteMovieDirectorDropdown ();
+    });
+
+function populateDirectorDropdowns ()
+    {
     $.ajax (
         {
         url:   "/v1/directors.json",
@@ -80,16 +95,7 @@ $(function ()
             $("#admin-delete-movie-director").append (options);
             }
         });
-
-    // 3. Create button triggers
-    $("#admin-add-director-button").click (function ()    { adminAddDirector ();    });
-    $("#admin-delete-director-button").click (function () { adminDeleteDirector (); });
-    $("#admin-add-movie-button").click (function ()       { adminAddMovie ();       });
-    $("#admin-delete-movie-button").click (function ()    { adminDeleteMovie ();    });
-
-    // 4. Create director dropdown 'change' trigger to populate associated movie dropdown
-    hookDeleteMovieDirectorDropdown ();
-    });
+    }
 
 function hookDeleteMovieDirectorDropdown ()
     {
@@ -163,6 +169,8 @@ function hookDeleteMovieDirectorDropdown ()
 
 function adminAddDirector ()
     {
+    // CODE COMPLETE, WORKING
+
     // Extract new director_name from the text box
     var director_name = $("#admin-add-director-director").val ();
 
@@ -172,7 +180,7 @@ function adminAddDirector ()
         }
     else
         {
-        alert ("director_name: " + director_name);
+        // alert ("director_name: " + director_name);
 
         var jsonOut = { "_id" : director_name, "name" : director_name, "description" : "" };
 
@@ -184,10 +192,7 @@ function adminAddDirector ()
             url:   url,
             async: false,
             type:  "PUT",
-            data:
-                {
-                "jsonOut": jsonOut
-                },
+            data:  jsonOut,
             dataType: "json",
             error: function (xhr, status, error)
                 {
@@ -199,6 +204,9 @@ function adminAddDirector ()
                 {
                 alert ("ajax() success on PUT " + url + "\n" +
                        "data: " + JSON.stringify (data));
+
+                // Re-populate the 3 director dropdowns
+                populateDirectorDropdowns ();
                 }
             });
         }
@@ -249,10 +257,11 @@ function adminDeleteDirector ()
                 {
                 alert ("ajax() success on DELETE " + url + "\n" +
                        "data: " + JSON.stringify (data));
+
+                // Re-populate the 3 director dropdowns
+                populateDirectorDropdowns ();
                 }
             });
-
-
         }
     }
 
