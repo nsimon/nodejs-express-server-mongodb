@@ -2,21 +2,6 @@
 // Desc ..... Nodejs/express reference REST api
 
 /******************************************************************************/
-/* TODO                                                                       */
-/******************************************************************************/
-
-// GUI: Add an "Admin" link to the home page, which enables:
-//   . Add director
-//   . Add movie
-//   . Delete director (and all of their movies)
-//   . Delete move
-//
-// return json: { "message":message }
-//   . Add var values to all, as possible
-//
-// handlers ?
-
-/******************************************************************************/
 /* mongodb database schema                                                    */
 /******************************************************************************/
 
