@@ -19,7 +19,7 @@
         <td>Add Movie</td>
         <td>
           <select id="admin-add-movie-director"></select><br />
-          <select id="admin-add-movie-movie"><option value="Choose Movie">Choose Movie</option></select>
+          <select id="admin-add-movie-movie"><option disabled selected>Choose movie...</option></select>
         </td>
         <td><button id="admin-add-movie-button">Add</button></td>
       </tr>
@@ -27,7 +27,7 @@
         <td>Delete Movie</td>
         <td>
           <select id="admin-delete-movie-director"></select><br />
-          <select id="admin-delete-movie-movie"><option value="Choose Movie">Choose Movie</option></select>
+          <select id="admin-delete-movie-movie"><option disabled selected>Choose movie...</option></select>
         </td>
         <td><button id="admin-delete-movie-button">Delete</button></td>
       </tr>
