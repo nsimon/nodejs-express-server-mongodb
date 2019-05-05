@@ -80,25 +80,10 @@ $(function ()
         });
 
     // 3. Create button triggers
-    $("#admin-add-director-button").click (function ()
-        {
-        adminAddDirector ();
-        });
-
-    $("#admin-delete-director-button").click (function ()
-        {
-        adminDeleteDirector ();
-        });
-
-    $("#admin-add-movie-button").click (function ()
-        {
-        adminAddMovie ();
-        });
-
-    $("#admin-delete-movie-button").click (function ()
-        {
-        adminDeleteMovie ();
-        });
+    $("#admin-add-director-button").click (function ()    { adminAddDirector ();    });
+    $("#admin-delete-director-button").click (function () { adminDeleteDirector (); });
+    $("#admin-add-movie-button").click (function ()       { adminAddMovie ();       });
+    $("#admin-delete-movie-button").click (function ()    { adminDeleteMovie ();    });
 
     // 4. Create director dropdown 'change' trigger to populate associated movie dropdown
     hookDeleteMovieDirectorDropdown ();
