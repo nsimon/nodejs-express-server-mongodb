@@ -9,6 +9,7 @@ $(function ()
     $.ajax (
         {
         url:   "/templates/admin_page.div",  // html to be inserted into "body"
+        async: false,                        // Block until ajax call returns
         type:  "GET",
         error: function (xhr, status, error)
             {
@@ -29,6 +30,7 @@ $(function ()
     $.ajax (
         {
         url:   "/v1/directors.json",
+        async: false,                        // Block until ajax call returns
         type:  "GET",
         error: function (xhr, status, error)
             {
@@ -68,7 +70,7 @@ $(function ()
 
             // alert ("options: " + options);
 
-            // Insert into director dropdowns
+            // Insert "options" (i.e. director names) into director dropdowns
             $("#admin-delete-director-director").empty ();          // clear
             $("#admin-delete-director-director").append (options);  // append options
             $("#admin-add-movie-director").empty ();
@@ -78,18 +80,29 @@ $(function ()
             }
         });
 
-    // 3. When AJAX calls are complete, create triggers:
+    // 3. Create triggers:
     //    . add-movie-director-dropdown, delete-movie-director-dropdown
     //      - to populate associated movie dropdown
     //    . all buttons
     //      - to issue API calls
-    //    . NOTE: initially, test each trigger with alert()
-    $(document).ajaxStop (function ()
+    $("#admin-add-director-button").click (function ()
         {
-        $("#admin-add-director-button").click (function ()
-            {
-            alert ("#admin-add-director-button");
-            });
+        alert ("#admin-add-director-button");
+        });
+
+    $("#admin-delete-director-button").click (function ()
+        {
+        alert ("#admin-delete-director-button");
+        });
+
+    $("#admin-add-movie-button").click (function ()
+        {
+        alert ("#admin-add-movie-button");
+        });
+
+    $("#admin-delete-movie-button").click (function ()
+        {
+        alert ("#admin-delete-movie-button");
         });
     });
 
