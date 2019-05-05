@@ -100,8 +100,7 @@ $(function ()
         adminDeleteMovie ();
         });
 
-    // 4. Create director dropdown 'change' triggers
-    //    (to populate associated movie dropdown)
+    // 4. Create director dropdown 'change' trigger to populate associated movie dropdown
     hookDeleteMovieDirectorDropdown ();
     });
 
@@ -124,9 +123,9 @@ function hookDeleteMovieDirectorDropdown ()
             type:  "GET",
             error: function (xhr, status, error)
                 {
-                alert ("ajax() error on: GET " + url    + "\n" +
-                       "status: "              + status + "\n" +
-                       "error: "               + error);
+                alert ("ajax() error on: GET " + url + "\n" +
+                       "status: " + status + "\n" +
+                       "error: "  + error);
                 },
             success: function (data)
                 {
