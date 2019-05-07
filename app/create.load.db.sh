@@ -3,13 +3,26 @@
 # Date ... 04/23/2019
 # Desc ... create.load.db.sh
 
-# Create standalone script to create/load database:
-#   . if exists, drop
+# Standalone script to "drop, create, then load" the movieapp database:
+#   . drop db (if exists)
 #   . create db
-#   . create collection: directors
-#   . create collection: movies
 #   . load directors
 #   . load movies
+
+# mongodb database schema:
+#
+# database: movieapp
+#
+# collection: directors
+#   { "_id" : "Peele",
+#     "name" : "Peele",
+#     "description" : "He is best known for his film and television work in the comedy and horror genres." }
+#   
+# collection: movies
+#   { "_id" : "Get_Out_2017",
+#     "directors_id" : "Peele",
+#     "name" : "Get_Out_2017",
+#     "description" : "A young African-American visits his white girlfriends parents for the weekend, where his simmering uneasiness about their reception of him eventually reaches a boiling point." }
 
 printf "create.load.db.sh\n"
 printf "\n"
