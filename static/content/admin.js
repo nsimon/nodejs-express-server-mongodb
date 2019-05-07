@@ -1,5 +1,7 @@
 // admin.js
 
+// runs when admin page is rendered
+
 $(function ()
     {
     // 1. GET /templates/admin_page.div, insert into <body>
@@ -23,11 +25,10 @@ $(function ()
             }
         });
 
-
     // 2. GET /v1/directors.json, insert into 3 "director" dropdowns
     populateDirectorDropdowns ();
 
-    // 3. Create button triggers
+    // 3. Create button triggers-to-functions
     $("#admin-add-director-button").click (function ()    { adminAddDirector ();    });
     $("#admin-delete-director-button").click (function () { adminDeleteDirector (); });
     $("#admin-add-movie-button").click (function ()       { adminAddMovie ();       });
@@ -36,6 +37,24 @@ $(function ()
     // 4. Create director dropdown 'change' trigger to populate associated movie dropdown
     hookDeleteMovieDirectorDropdown ();
     });
+
+function hookDeleteMovieDirectorDropdown ()
+    {
+    $("#admin-delete-movie-director").change (function ()
+        {
+        // Extract new director_name from the text box
+        var director_name = $("#admin-delete-movie-director").find("option:selected").text ();
+
+        // alert ("director_name: " + director_name);
+
+        // Populate using the selected director_name
+        populateMovieDropdown (director_name);
+        });
+    }
+
+/******************************************************************************/
+/* populate-dropdown functions                                                */
+/******************************************************************************/
 
 function populateDirectorDropdowns ()
     {
@@ -97,69 +116,61 @@ function populateDirectorDropdowns ()
         });
     }
 
-function hookDeleteMovieDirectorDropdown ()
+function populateMovieDropdown (director_name)
     {
-    $("#admin-delete-movie-director").change (function ()
+    var url = "/v1/directors/" + director_name + "/movies.json";
+
+    // GET /v1/directors/{director_name}/movies.json, insert into associated movie dropdown
+    $.ajax (
         {
-        // Extract new director_name from the text box
-        var director_name = $("#admin-delete-movie-director").find("option:selected").text ();
-
-        // alert ("director_name: " + director_name);
-
-        var url = "/v1/directors/" + director_name + "/movies.json";
-
-        // GET /v1/directors/{director_name}/movies.json, insert into associated movie dropdown
-        $.ajax (
+        url:   url,
+        async: false,
+        type:  "GET",
+        error: function (xhr, status, error)
             {
-            url:   url,
-            async: false,
-            type:  "GET",
-            error: function (xhr, status, error)
+            alert ("ajax() error on GET " + url + "\n" +
+                   "status: " + status + "\n" +
+                   "error: "  + error);
+            },
+        success: function (data)
+            {
+            // alert ("ajax() success on GET " + url + "\n" +
+            //        "data: " + JSON.stringify (data));
+
+            // (ex) data =
+            // { "rc": 0, "message": "movies found: 2",
+            //   "data": { "movies": [ { "moviejson": "Get_Out_2017.json", "moviename": "Get_Out_2017" },
+            //                         { "moviejson": "Us_2019.json",      "moviename": "Us_2019" }]}}
+
+            var rc         = data.rc;
+            var message    = data.message;
+            var movies     = data.data.movies;
+            var options    = "";
+            var movie_name = "";
+
+            // alert ("rc: "      + rc      + "\n" +
+            //        "message: " + message + "\n" +
+            //        "movies: "  + movies);
+
+            // Hardcode 1st dropdown option
+            options += "<option disabled selected>Choose movie...</option>";
+
+            // Get each movie name
+            for (var i = 0; i < movies.length; i++)
                 {
-                alert ("ajax() error on GET " + url + "\n" +
-                       "status: " + status + "\n" +
-                       "error: "  + error);
-                },
-            success: function (data)
-                {
-                // alert ("ajax() success on GET " + url + "\n" +
-                //        "data: " + JSON.stringify (data));
+                // ex: Get_Out_2017
+                movie_name = movies [i].moviename;
 
-                // (ex) data =
-                // { "rc": 0, "message": "movies found: 2",
-                //   "data": { "movies": [ { "moviejson": "Get_Out_2017.json", "moviename": "Get_Out_2017" },
-                //                         { "moviejson": "Us_2019.json",      "moviename": "Us_2019" }]}}
-
-                var rc         = data.rc;
-                var message    = data.message;
-                var movies     = data.data.movies;
-                var options    = "";
-                var movie_name = "";
-
-                // alert ("rc: "      + rc      + "\n" +
-                //        "message: " + message + "\n" +
-                //        "movies: "  + movies);
-
-                // Hardcode 1st dropdown option
-                options += "<option disabled selected>Choose movie...</option>";
-
-                // Get each movie name
-                for (var i = 0; i < movies.length; i++)
-                    {
-                    // ex: Get_Out_2017
-                    movie_name = movies [i].moviename;
-
-                    // ex: <option>Get_Out_2017</option>
-                    options += "<option value='" + movie_name + "'>" + movie_name + "</option>";
-                    }
-
-                // alert ("options: " + options);
-
-                // Insert "options" (i.e. movie names) into associated movie dropdown
-                $("#admin-delete-movie-movie").empty ();          // clear
-                $("#admin-delete-movie-movie").append (options);  // append options
+                // ex: <option>Get_Out_2017</option>
+                options += "<option value='" + movie_name + "'>" + movie_name + "</option>";
                 }
-            });
+
+            // alert ("options: " + options);
+
+            // Insert "options" (i.e. movie names) into associated movie dropdown
+            $("#admin-delete-movie-movie").empty ();          // clear
+            $("#admin-delete-movie-movie").append (options);  // append options
+            }
         });
     }
 
@@ -292,6 +303,8 @@ function adminAddMovie ()
 
 function adminDeleteMovie ()
     {
+    // CODE COMPLETE, WORKING
+
     var director_name = $("#admin-delete-movie-director").find("option:selected").text ();
 
     if (director_name == "Choose director...")
@@ -308,8 +321,40 @@ function adminDeleteMovie ()
             }
         else
             {
-            alert ("director_name: " + director_name + "\n" +
-                   "movie_name: "    + movie_name);
+            // alert ("director_name: " + director_name + "\n" +
+            //        "movie_name: "    + movie_name);
+
+            // JSON_OUT="{ \"name\": \"Animal_House_1978\" }"
+            // curl --request DELETE \
+            //      --header 'Content-Type: application/json' \
+            //      --data "$JSON_OUT" \
+            //      http://localhost:8080/v1/directors/Landis/movies.json
+
+            // ex: /v1/directors/Landis/movies.json
+            var url = "/v1/directors/" + director_name + "/movies.json";
+
+            $.ajax (
+                {
+                url:   url,
+                async: false,
+                type:  "DELETE",
+                data:  { "name": movie_name },
+                dataType: "json",
+                error: function (xhr, status, error)
+                    {
+                    alert ("ajax() error on DELETE " + url + "\n" +
+                           "status: " + status + "\n" +
+                           "error: "  + error);
+                    },
+                success: function (data)
+                    {
+                    alert ("ajax() success on DELETE " + url + "\n" +
+                           "data: " + JSON.stringify (data));
+
+                    // Populate using the director_name
+                    populateMovieDropdown (director_name);
+                    }
+                });
             }
         }
     }
