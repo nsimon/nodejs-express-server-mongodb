@@ -278,6 +278,8 @@ function adminDeleteDirector ()
 
 function adminAddMovie ()
     {
+    // TODO
+
     var director_name = $("#admin-add-movie-director").find("option:selected").text ();
 
     if (director_name == "Choose director...")
