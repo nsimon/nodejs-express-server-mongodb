@@ -718,7 +718,7 @@ v1.delete ("/directors/:director.json", (request, response) =>
                                 console.log ("successful folder unlink ... " + directorFolder);
         
                                 rc = 200;
-                                message = "successfully removed director and their files";
+                                message = "successfully removed director and their movies";
                                 console.log (message);
                                 }
         
